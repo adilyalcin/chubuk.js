@@ -1,0 +1,535 @@
+@import "lesshat/lesshat";
+
+.Chubuk{
+  .display(flex);
+  .flex-direction(column);
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+
+  // to reuse the style for different sections
+  .selectedVizType{
+    background-color: lightgray;
+    border-color: gray;
+    box-shadow: 1px 1px 1px black;
+  }
+
+  > .configPanel{
+    display: block;
+    position: absolute;
+    .user-select(none);
+    left: 0px;
+    bottom: -80px;
+    z-index: 200;
+    width: 100%;
+    border-radius: 5px;
+    border: solid 1px lightgray;
+    margin: 0px;
+    background-color: rgba(238, 238, 238, 0.9);
+
+    &[active="false"]{
+      border: solid 0px lightgray;
+      margin: 1px;
+      > .selectVizType{ display: none; }
+      > .configGroup{ display: none; }
+    }
+
+    > .configVisiblityButton{
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      cursor: pointer;
+      &:hover{ color: orangered; }
+    }
+
+    > .selectVizType{
+      padding: 5px;
+      .display(flex);
+      .flex-direction(row);
+      > .vizType{
+        .flex(1);
+        border: solid 1px lightgray;
+        border-radius: 10px;
+        text-align: center;
+        margin: 1px 5px;
+        cursor: pointer;
+        &:hover{ box-shadow: 1px 1px 1px black; }
+      }
+    }
+
+    > .configGroup{
+      border: solid 1px gray;
+      border-radius: 8px;
+      margin-left: 10px;
+      padding: 2px 2px 2px 3px;
+      display: inline-block;
+      background-color: #EEE;
+      > .configHeading{
+        font-weight: 700;
+        cursor: pointer;
+        color: black;
+        &:hover{ color: orangered; }
+      }
+      > .configOpt{
+        display: inline-block;
+        cursor: pointer;
+        font-size: 0.8em;
+        border: solid 1px lightgray;
+        border-radius: 4px;
+        padding: 0px 2px;
+        background-color: white;
+        > .opt_label{
+          margin-left: 2px;
+          font-size: 0.9em;
+        }
+        &:hover{ color: orangered !important; }
+        &.dataDistr{
+          > input[type="radio"]{
+            height: 12px;
+            vertical-align: baseline;
+            padding: 2px;
+            margin: 0px;
+          }
+          > label{ cursor: pointer; }
+        }
+        &.numItems{
+          .in_numItems{
+            border-width: 0px;
+            width: 35px;
+          }
+        }
+        &.barHeightList { display: none; } // only in long-list
+        &.button_wrappedInverse{ display: none; } // only in wrapped
+        &.button_showColor     { display: none; } // only when data includes negative values
+        &.columnGap { display: none; } // only in wrapped
+        input:not([name="dist_mode"]){
+          border-width: 0px;
+          width: 35px;
+        }
+      }
+      .refreshData{
+        cursor: pointer;
+        &:hover{ color: orangered; }
+      }
+      &[active="false"]{
+        > .configOpt{ display: none !important; }
+        > .configHeading{ color: gray; }
+      }
+    } // .configGroup
+  } // .configPanel
+
+  > .chartWrapper{
+      position: relative;
+      .flex(1);
+      .display(flex);
+      .flex-direction(column);
+      z-index: 10;
+      overflow: visible;
+      overflow-x: hidden;
+      .box-sizing(border-box);
+      *{ .box-sizing(border-box);   }
+      > .recordGroup{
+        position: relative;
+        overflow: hidden;
+        .flex(1);
+      }
+      > .rowGroup{
+        display: none;
+        > .rowIndexLabel{
+          text-align: right;
+          position: absolute;
+          right: 2px;
+          font-weight: 100;
+      //    width: 25px;
+          font-size: 0.9em;
+          &:after{
+            content: "#";
+            color: gray;
+            font-size: 0.6em;
+            position: relative;
+            top: -2px;
+            margin-left: 1px;
+          }
+        }
+      }
+  } // .chartWrapper
+
+  .record{
+    display: block;
+    position: absolute;
+    .transition(~"left 700ms ease-in-out, width 700ms ease-in-out, height 700ms ease-in-out, top 700ms ease-in-out");
+    > .block{
+      display: block;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      .transition(~"all 250ms ease-in-out");
+      &:after{
+        color: white;
+        text-align: right;
+        font-size: 10px;
+        display: block;
+        padding: 1px;
+      }
+    }
+    &[highlight="opt_1"] { z-index: 9999 !important; }
+    &[highlight="opt_2"] { z-index: 9999 !important; }
+    > .dot_tip{
+      display: block;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      right: -5px;
+      border-radius: 10px;
+      border: solid 1px white;
+      background-color: green;
+      opacity: 0;
+      box-shadow: 0px 0px 1px white;
+      top: calc(~"50% - 5px");
+      .transition(~"all 200ms ease-in-out");
+      z-index: 100;
+    }
+    > .label{
+      position: absolute;
+      left: 0%;
+      width: 100%;
+      padding-left: 1px;
+      padding-right: 1px;
+      padding-top: 1px;
+      font-size: 0.8em;
+      font-weight: 300;
+      text-shadow: 0px 0px 2px white;
+      z-index: 101;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      pointer-events: none;
+    }
+    &:hover{ z-index: 90 !important; }
+  }
+
+  > .chartAxis{
+    position: relative;
+    > .scale {
+      position: absolute;
+      > .baseLine{
+        border-bottom: solid 1px lightgray;
+        position: absolute;
+        top: 0px;
+      }
+      > .tick{
+        cursor: pointer;
+        pointer-events: none;
+        position: absolute;
+        height: 10px;
+        > .line{
+          display: block;
+          position: absolute;
+          left: -1px;
+          width: 0px;
+          border-left: dotted 1px gray;
+          //height: 10px; // set by the code
+          //top: -5px; // set by the code
+        }
+        &[value="0"] {
+          > .line{
+            border-left: solid 2px gray;
+            left: -1px;
+          }
+          > .text{
+            font-weight: 700;
+            &[textpos="upper"]{ margin-top: -1px; }
+          }
+        }
+        > .text{
+          display: block;
+          position: relative;
+          margin-top: 1px;
+          cursor: pointer;
+          left: -50%;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  &[chart_type="long_list"]{
+    .vizType.long_list{ .selectedVizType() }
+    .record {
+      > .block{ background-color: #92C5E2; }
+      &[highlight="opt_1"] > .block{ background-color: #017801; }
+      &[highlight="opt_2"] > .block{ background-color: #910791; }
+      > .label{
+        overflow: visible;
+        text-overflow: none;
+      }
+    }
+    > .chartAxis{
+      &[lowerNegative="true"]{ .text-lower:before{ content: "-"; } }
+      &[upperNegative="true"]{ .text-upper:before{ content: "-"; } }
+    }
+    > .chartWrapper{
+      border-top: solid 1px lightgray;
+      border-bottom: solid 1px lightgray;
+      margin-top: -1px;
+      margin-bottom: -1px;
+      > .recordGroup{ overflow-y: auto; }
+    }
+    > .configPanel > .configGroup > .configOpt{
+      &.barHeightList{ display: inline-block; }
+      &.numBands     { display: none;         }
+      &.barPadding   { display: none;         }
+    }
+  }
+
+  &[chart_type="treemap"]{
+    .vizType.treemap{ .selectedVizType() }
+    .record{
+      border: solid 1px white;
+      > .block{ background-color: #92C5E2; }
+      > .block:after{ text-align: center; }
+      &[highlight="opt_1"] > .block{ background-color: #017801; }
+      &[highlight="opt_2"] > .block{ background-color: #910791; }
+      > .label{ text-align: center; }
+    }
+    > .chartAxis{ display: none; }
+    > .chartWrapper {
+      border-top: none;
+      border-bottom: none;
+      > .rowGroup > .rowIndexLabel{ display: none; }
+    }
+    > .configPanel > .configGroup > .configOpt{
+      &.numBands      { display: none;         }
+      &.barPadding    { display: none;         }
+      &.button_showTinyBar  { display: none;         }
+      &.button_showTip      { display: none;         }
+      &.button_showGridLines{ display: none;         }
+    }
+  } // &[chart_type="treemap"]
+
+  &[chart_type="piled_bars"]{
+    .vizType.piled_bars{ .selectedVizType() }
+    .record{
+      > .block{
+        top: 0px;
+        border-style: solid;
+        border-width: 1px 0px; // top and bottom borders
+      }
+      &[highlight="opt_1"] > .block{ border: solid 4px #1A8542 !important; }
+      &[highlight="opt_2"] > .block{ border: solid 4px rgb(128, 0, 128) !important; }
+      &[isNegative="false"]{
+        box-shadow: 4px 0px 5px -0px white;
+        > .label{
+          text-align: right;
+          left: auto;
+          right: 0%;
+        }
+      }
+      &[isNegative="true"]{
+        box-shadow: -4px 0px 5px -0px white;
+        border-right: 0px;
+        .dot_tip{
+          left: -7px;
+          right: auto;
+        }
+      }
+    }
+  } // &[chart_type="piled_bars"]
+
+  &[chart_type="wrapped_bars"]{
+    .vizType.wrapped_bars{ .selectedVizType() }
+    .record{
+      > .block{ background-color: #92C5E2; }
+      &[highlight="opt_1"] > .block{ background-color: #017801; }
+      &[highlight="opt_2"] > .block{ background-color: #910791; }
+      &[isNegative="true"]{
+        > .label{
+          position: absolute;
+          right: 0%;
+          width: 100%;
+          padding-right: 2px;
+          padding-left: 0px;
+          padding-top: 2px;
+          text-align: right;
+        }
+        > .dot_tip{
+          left: -7px;
+          right: auto;
+        }
+      }
+    }
+    > .configPanel > .configGroup > .configOpt{
+      &.button_wrappedInverse{ display: inline-block; }
+      &.columnGap{ display: inline-block; }
+    }
+  } // [chart_type="wrapped_bars"]
+
+  &[showTip="true"]{
+    .dot_tip{ opacity: 1; }
+    .button_showTip > .fa:before{ content: "\f06e"; }
+  }
+  &[showTip="false"]{
+    .button_showTip{
+      color: gray;
+      > .fa:before{ content: "\f070"; }
+    }
+  }
+
+  &[showLabel="true"]{
+    .label{ display: block; }
+    .button_showLabel > .fa:before{
+      content: "\f06e";
+    }
+  }
+  &[showLabel="false"]{
+    .label{ display: none; }
+    .button_showLabel {
+      color: gray;
+      > .fa:before{
+        content: "\f070";
+      }
+    }
+  }
+
+  &[showColor="true"]{
+    .button_showColor {
+      background-color: rgba(255, 69, 0, 0.5) !important;
+      color: white;
+      > .fa:before{ content: "\f058"; }
+    }
+    .record[isNegative="true"] > .block{ background-color: #ef8a62; }
+  }
+  &[showColor="false"]{
+    .button_showColor {
+      background-color: rgba(255, 69, 0, 0.13) !important;
+      color: gray;
+      > .fa:before{ content: "\f057"; }
+    }
+  }
+
+  &[showTooltip="true"]{
+    .button_showTooltip > .fa:before{ content: "\f06e"; }
+  }
+  &[showTooltip="false"]{
+    .button_showTooltip {
+      color: gray;
+      > .fa:before{ content: "\f070"; }
+    }
+  }
+
+  &[showTinyBar="true"]{
+    .button_showTinyBar > .fa:before{ content: "\f058"; }// Check
+  }
+  &[showTinyBar="false"]{
+    .button_showTinyBar {
+      color: gray;
+      > .fa:before{ content: "\f057"; } // Cross
+    }
+  }
+
+  &[showGridLines="true"]{
+      .button_showGridLines > .fa:before{
+          content: "\f058"; // Check
+      }
+  }
+  &[showGridLines="false"]{
+      .button_showGridLines {
+          color: gray;
+          > .fa:before{
+              content: "\f057"; // Cross
+          }
+      }
+      > .chartAxis > .scale > .tick > .text{
+          display: none;
+      }
+      > .chartAxis > .scale > .tick:not([value="0"]) > .line{
+          display: none;
+      }
+  }
+
+  &[wrappedInverse="true"]{
+      .button_wrappedInverse > .fa:before{
+          content: "\f058"; // Check
+      }
+  }
+  &[wrappedInverse="false"]{
+      .button_wrappedInverse {
+          color: gray;
+          > .fa:before{
+              content: "\f057"; // Cross
+          }
+      }
+  }
+
+  .negativeRatio{
+      .user-select(none);
+  }
+  &[datanegative="true"]{
+      .config_datanegative > .fa:before{
+          content: "\f058"; // Check
+      }
+      .negativeRatio{
+          display: inline-block;
+          width:50px;
+          height:10px;
+      }
+      > .configPanel > .configGroup > .configOpt{
+          &.button_showColor{ display: inline-block; }
+      }
+  }
+  &[datanegative="false"]{
+      .config_datanegative{
+          color: gray;
+          > .fa:before{
+              content: "\f057"; // Cross
+          }
+      }
+      .negativeRatio{
+          display: none;
+      }        
+  }
+
+  &[showTinyBar="true"]:not([type="treemap"]){
+      .record > .block{ 
+          height: 2px;
+          top: calc(~"50% - 1px");
+      }
+  }
+}
+
+.tipsy { 
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px; 
+  position: absolute; 
+  padding: 5px;
+  z-index: 100000;
+  pointer-events: none;
+  .tipsy-inner { 
+    padding: 3px;
+    font-size: 1.2em;
+    background-color: #000; 
+    color: #FFF;
+    max-width: 200px;
+    text-align: center;
+    font-weight: 300px;
+    border-radius: 3px;
+  }
+}
+
+/* Uncomment for shadow */
+/*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
+
+.tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
+
+.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent !important; border-right-color: transparent !important; }
+.tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent !important; border-right-color: transparent !important;}
+.tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent !important; border-right-color: transparent !important;}
+.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent !important; border-right-color: transparent !important; }
+.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent !important; border-right-color: transparent !important; }
+.tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent !important; border-right-color: transparent !important; }
+.tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent !important; border-bottom-color: transparent !important; }
+.tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent !important; border-bottom-color: transparent !important; }
+

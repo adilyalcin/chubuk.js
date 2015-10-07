@@ -1,0 +1,176 @@
+<!-- http://localhost:10090/demo.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Chubuk Demo Page</title><meta charset="utf-8">
+    <script type="text/javascript" src="./js/d3.3.5.5.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="./chubuk.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./chubuk.css" type="text/css" charset="utf-8">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,500italic,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript">
+
+var dataGenerator = {
+  theData: [],
+  numOfItems: 150,
+  datanegative: false,
+  negativeRatio: 0.5,
+  normal    : function(){ return this.normal_d3()*300; },
+  logNormal : function(){ return this.logNormal_d3()*20; },
+  random    : function(){ return Math.random()*1000; },
+  selected  : null,
+  normal_d3   : d3.random.normal(2.0,0.6),
+  //normal_d3   : d3.random.normal(),
+  logNormal_d3: d3.random.logNormal(),
+  /** -- */
+  init: function(){
+    this.selected = this.normal;
+  },
+  /** -- */
+  // http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
+  shuffle: function(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+  },
+  /** -- */
+  generateData: function(){
+    this.theData = [];
+    this.shuffle(countries); // Randomize labels
+    for(var i=0; i<this.numOfItems; i++){
+      this.theData.push({
+        Value: Math.abs(this.selected()),
+        Label: countries[i%countries.length]
+      });
+    }
+    // set sign if the data can have negative values.
+    if(this.datanegative){
+      this.theData.forEach(function(d){
+        d.Value *= (Math.random()>this.negativeRatio?1:-1);
+      },this);
+    }
+    chubuk.theData = this.theData;
+    /*
+    chubuk.theData = [
+      {Value: 789, Label: "-"},
+      {Value: 600.9079880684096, Label: "-"},
+      {Value: 565.8800929588422, Label: "-"},
+      {Value: 558.2643867255665, Label: "-"},
+      {Value: 543.3198231116028, Label: "-"},
+      {Value: 525.5917741023895, Label: "-"},
+      {Value: 427.01276185324275, Label: "-"},
+      {Value: 404.4002297714085, Label: "-"},
+      {Value: 280.69047226665157, Label: "-"},
+      {Value: 258.4188789552743, Label: "-"},
+    ];
+    */
+    chubuk.sortData_decr(true);
+    $(".Chubuk").attr("datanegative",dataGenerator.datanegative);
+    this.highlight_task_comparison();
+  },
+  /** -- */
+  highlight_task_comparison: function() {
+    // set two records highlighted
+    // Note: Do not pick values that will be too small...
+    // this.theData[Math.floor(Math.random()*this.numOfItems)].highlighted="opt_1";
+    // this.theData[Math.floor(Math.random()*this.numOfItems)].highlighted="opt_2";
+  }
+};
+
+function doGenerate(event){
+  dataGenerator.generateData();
+  chubuk.insertDOM_Records();
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+};
+
+$(document).ready( function(){
+  chubuk = new Chubuk();
+  dataGenerator.init();
+  chubuk.setSize($(".chartWrapper").width(),$(".chartWrapper").height());
+
+  chubuk.setConfig("chart_type","piled_bars");
+
+  doGenerate();
+
+  // Electoral data
+  // chubuk.DOM.records.attr("winner", function(d){ return d.winner; });
+
+  // Data generation related callbacks
+  $("input[name=dist_mode]").on("change", function(event) {
+    dataGenerator.selected = dataGenerator[this.value];
+    doGenerate(event);
+  });
+  $(".negativeRatio").on("change",function(event){
+    dataGenerator.negativeRatio = 1*this.value/100;
+    doGenerate(event);
+  });
+  $(".config_datanegative").click(function(event){
+    dataGenerator.datanegative = !dataGenerator.datanegative;
+    $(".Chubuk").attr("datanegative",dataGenerator.datanegative);
+    doGenerate(event);
+  });
+  $(".configHeading").click(function(){
+    this.parentNode.setAttribute("active", this.parentNode.getAttribute("active")==="false");
+  })
+  $(".in_numItems").on("change",function(){
+    dataGenerator.numOfItems = 1*this.value;
+    dataGenerator.generateData();
+    chubuk.insertDOM_Records();
+  });
+});
+
+var countries = [
+    "China","India","United States","Indonesia","Brazil","Pakistan","Nigeria","Bangladesh","Russia","Japan","Mexico","Philippines","Ethiopia","Vietnam","Egypt","Turkey","Germany","Iran","Congo, Democratic Republic of the","Thailand","France","United Kingdom","Italy","Burma","Tanzania","Korea, South","South Africa","Spain","Colombia","Kenya","Ukraine","Argentina","Algeria","Poland","Uganda","Sudan","Canada","Morocco","Iraq","Afghanistan","Nepal","Peru","Malaysia","Uzbekistan","Venezuela","Saudi Arabia","Yemen","Ghana","Korea, North","Mozambique","Taiwan","Madagascar","Cameroon","Cote d'Ivoire","Australia","Sri Lanka","Romania","Angola","Burkina Faso","Syria","Kazakhstan","Niger","Malawi","Chile","Netherlands","Mali","Ecuador","Cambodia","Guatemala","Zambia","Zimbabwe","Senegal","Rwanda","South Sudan","Guinea","Chad","Cuba","Tunisia","Portugal","Greece","Bolivia","Czech Republic","Belgium","Somalia","Burundi","Dominican Republic","Benin","Haiti","Hungary","Sweden","Azerbaijan","Belarus","Honduras","Austria","Switzerland","Tajikistan","Jordan","Israel","Togo","Serbia","Hong Kong","Bulgaria","Laos","Paraguay","Papua New Guinea","Eritrea","Libya","El Salvador","Lebanon","Nicaragua","Sierra Leone","United Arab Emirates","Kyrgyzstan","Denmark","Singapore","Slovakia","Central African Republic","Finland","Turkmenistan","Norway","Georgia","Ireland","Costa Rica","Congo, Republic of the","Croatia","New Zealand","Liberia","Bosnia and Herzegovina","Puerto Rico","Panama","Moldova","Mauritania","Lithuania","Uruguay","Oman","Armenia","Albania","Mongolia","Jamaica","Kuwait","West Bank","Namibia","Latvia","Botswana","Qatar","Macedonia","Slovenia","Lesotho","Gambia, The","Kosovo","Gaza Strip","Guinea-Bissau","Gabon","Swaziland","Mauritius","Bahrain","Estonia","Trinidad and Tobago","Timor-Leste","Cyprus","Fiji","Djibouti","Comoros","Guyana","Bhutan","Equatorial Guinea","Montenegro","Solomon Islands","Macau","Suriname","Western Sahara","Cabo Verde","Luxembourg","Brunei","Malta","Maldives","Belize","Bahamas, The","Iceland","Barbados","French Polynesia","New Caledonia","Vanuatu","Samoa","Sao Tome and Principe","Saint Lucia","Guam","Curacao","Aruba","Grenada","Tonga","Micronesia, Federated States of","Kiribati","Virgin Islands","Saint Vincent and the Grenadines","Jersey","Seychelles","Antigua and Barbuda","Isle of Man","Andorra","Dominica","Marshall Islands","Bermuda","Guernsey","Greenland","Cayman Islands","American Samoa","Saint Kitts and Nevis","Northern Mariana Islands","Faroe Islands","Turks and Caicos Islands","Sint Maarten","Liechtenstein","San Marino","British Virgin Islands","Saint Martin","Monaco","Gibraltar","Palau","Anguilla","Wallis and Futuna","Tuvalu","Cook Islands","Nauru","Saint Helena, Ascension, and Tristan da Cunha","Saint Barthelemy","Saint Pierre and Miquelon","Montserrat","Falkland Islands (Islas Malvinas)","Norfolk Island","Svalbard","Christmas Island","Tokelau","Niue","Holy See (Vatican City)","Cocos (Keeling) Islands","Pitcairn Islands","Akrotiri","Clipperton Island","Navassa Island","South Georgia and South Sandwich Islands","Spratly Islands","United States Pacific Island Wildlife Refuges","Coral Sea Islands","Jan Mayen","Ashmore and Cartier Islands","Paracel Islands","British Indian Ocean Territory","Wake Island","French Southern and Antarctic Lands","Dhekelia","Heard Island and McDonald Islands","Bouvet Island"
+];
+
+</script>
+<style type="text/css" media="screen">
+  html, body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin:0px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+  }
+  .Chubuk{
+    height: 500px;
+    width: 800px;
+    margin: 0 auto;
+    padding-top: 25px;
+  }
+</style>
+	</head>
+  <body>
+    <div class="Chubuk">
+      <div class="configPanel" active="false">
+        <div class="selectVizType"></div>
+        <!-- Data Control -->
+        <span class="configGroup configGroup_Data" active="false">
+            <span class="configHeading">Data </span>
+            <span class="configOpt dataDistr">
+                <input name="dist_mode" type="radio" value="random" id="dist_mode_random">
+                    <label class="dist_mode_label" for="dist_mode_random">Rand </label>
+                <input name="dist_mode" type="radio" value="normal" id="dist_mode_normal" checked>
+                    <label class="dist_mode_label" for="dist_mode_normal">Norm. </label>
+                <input name="dist_mode" type="radio" value="logNormal" id="dist_mode_logNormal">
+                    <label class="dist_mode_label" for="dist_mode_logNormal">Skewed </label>
+                </span>
+            <span class="configOpt numItems">
+               # Values: <input class="in_numItems" type="number" min="100" max="5000" value="150" /> 
+            </span>
+            <span class="configOpt config_datanegative">
+                <span class="fa"></span><span class="opt_label">&lt;0</span>
+                <input type="range" min="0" max="100" value="50" class="negativeRatio">
+                </span>
+            <span class="refreshData fa fa-refresh" onclick="doGenerate(event)"></span>
+          </span> <!-- / Data Control -->
+      </div>
+    </div>
+  </body>
+</html>
