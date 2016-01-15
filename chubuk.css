@@ -242,12 +242,6 @@
   display: block;
   padding: 1px;
 }
-.Chubuk .record[highlight="opt_1"] {
-  z-index: 9999 !important;
-}
-.Chubuk .record[highlight="opt_2"] {
-  z-index: 9999 !important;
-}
 .Chubuk .record > .dot_tip {
   display: block;
   position: absolute;
@@ -335,12 +329,6 @@
 .Chubuk[chart_type="long_list"] .record > .block {
   background-color: #92C5E2;
 }
-.Chubuk[chart_type="long_list"] .record[highlight="opt_1"] > .block {
-  background-color: #017801;
-}
-.Chubuk[chart_type="long_list"] .record[highlight="opt_2"] > .block {
-  background-color: #910791;
-}
 .Chubuk[chart_type="long_list"] .record > .label {
   overflow: visible;
   text-overflow: none;
@@ -383,12 +371,6 @@
 .Chubuk[chart_type="treemap"] .record > .block:after {
   text-align: center;
 }
-.Chubuk[chart_type="treemap"] .record[highlight="opt_1"] > .block {
-  background-color: #017801;
-}
-.Chubuk[chart_type="treemap"] .record[highlight="opt_2"] > .block {
-  background-color: #910791;
-}
 .Chubuk[chart_type="treemap"] .record > .label {
   text-align: center;
 }
@@ -427,12 +409,6 @@
   border-style: solid;
   border-width: 1px 0px;
 }
-.Chubuk[chart_type="piled_bars"] .record[highlight="opt_1"] > .block {
-  border: solid 4px #1A8542 !important;
-}
-.Chubuk[chart_type="piled_bars"] .record[highlight="opt_2"] > .block {
-  border: solid 4px #800080 !important;
-}
 .Chubuk[chart_type="piled_bars"] .record[isNegative="false"] {
   box-shadow: 4px 0px 5px 0px #ffffff;
 }
@@ -456,12 +432,6 @@
 }
 .Chubuk[chart_type="wrapped_bars"] .record > .block {
   background-color: #92C5E2;
-}
-.Chubuk[chart_type="wrapped_bars"] .record[highlight="opt_1"] > .block {
-  background-color: #017801;
-}
-.Chubuk[chart_type="wrapped_bars"] .record[highlight="opt_2"] > .block {
-  background-color: #910791;
 }
 .Chubuk[chart_type="wrapped_bars"] .record[isNegative="true"] > .label {
   position: absolute;
