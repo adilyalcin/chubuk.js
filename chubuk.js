@@ -772,6 +772,9 @@ Chubuk.prototype = {
           }
         }
 
+        d._gradientPos = gradientPos;
+        d._gradientPos_2 = gradientPos_2;
+
         this.style.borderColor = color;
 
         var color_d3 = d3.rgb(color);

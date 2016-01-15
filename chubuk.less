@@ -173,8 +173,6 @@
         padding: 1px;
       }
     }
-    &[highlight="opt_1"] { z-index: 9999 !important; }
-    &[highlight="opt_2"] { z-index: 9999 !important; }
     > .dot_tip{
       display: block;
       position: absolute;
@@ -260,8 +258,6 @@
     .vizType.long_list{ .selectedVizType() }
     .record {
       > .block{ background-color: #92C5E2; }
-      &[highlight="opt_1"] > .block{ background-color: #017801; }
-      &[highlight="opt_2"] > .block{ background-color: #910791; }
       > .label{
         overflow: visible;
         text-overflow: none;
@@ -291,8 +287,6 @@
       border: solid 1px white;
       > .block{ background-color: #92C5E2; }
       > .block:after{ text-align: center; }
-      &[highlight="opt_1"] > .block{ background-color: #017801; }
-      &[highlight="opt_2"] > .block{ background-color: #910791; }
       > .label{ text-align: center; }
     }
     > .chartAxis{ display: none; }
@@ -318,8 +312,6 @@
         border-style: solid;
         border-width: 1px 0px; // top and bottom borders
       }
-      &[highlight="opt_1"] > .block{ border: solid 4px #1A8542 !important; }
-      &[highlight="opt_2"] > .block{ border: solid 4px rgb(128, 0, 128) !important; }
       &[isNegative="false"]{
         box-shadow: 4px 0px 5px -0px white;
         > .label{
@@ -343,8 +335,6 @@
     .vizType.wrapped_bars{ .selectedVizType() }
     .record{
       > .block{ background-color: #92C5E2; }
-      &[highlight="opt_1"] > .block{ background-color: #017801; }
-      &[highlight="opt_2"] > .block{ background-color: #910791; }
       &[isNegative="true"]{
         > .label{
           position: absolute;
