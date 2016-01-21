@@ -118,39 +118,38 @@
   } // .configPanel
 
   > .chartWrapper{
+    position: relative;
+    .flex(1);
+    .display(flex);
+    .flex-direction(column);
+    z-index: 10;
+    overflow: visible;
+    overflow-x: hidden;
+    .box-sizing(border-box);
+    *{ .box-sizing(border-box);   }
+    > .recordGroup{
       position: relative;
+      overflow: hidden;
       .flex(1);
-      .display(flex);
-      .flex-direction(column);
-      z-index: 10;
-      overflow: visible;
-      overflow-x: hidden;
-      .box-sizing(border-box);
-      *{ .box-sizing(border-box);   }
-      > .recordGroup{
-        position: relative;
-        overflow: hidden;
-        .flex(1);
-      }
-      > .rowGroup{
-        display: none;
-        > .rowIndexLabel{
-          text-align: right;
-          position: absolute;
-          right: 2px;
-          font-weight: 100;
-      //    width: 25px;
-          font-size: 0.9em;
-          &:after{
-            content: "#";
-            color: gray;
-            font-size: 0.6em;
-            position: relative;
-            top: -2px;
-            margin-left: 1px;
-          }
+    }
+    > .rowGroup{
+      display: none;
+      > .rowIndexLabel{
+        text-align: right;
+        position: absolute;
+        right: 2px;
+        font-weight: 100;
+        font-size: 0.9em;
+        &:after{
+          content: "#";
+          color: gray;
+          font-size: 0.6em;
+          position: relative;
+          top: -2px;
+          margin-left: 1px;
         }
       }
+    }
   } // .chartWrapper
 
   .record{
@@ -165,13 +164,6 @@
       width: 100%;
       height: 100%;
       .transition(~"all 250ms ease-in-out");
-      &:after{
-        color: white;
-        text-align: right;
-        font-size: 10px;
-        display: block;
-        padding: 1px;
-      }
     }
     > .dot_tip{
       display: block;
@@ -370,17 +362,13 @@
 
   &[showLabel="true"]{
     .label{ display: block; }
-    .button_showLabel > .fa:before{
-      content: "\f06e";
-    }
+    .button_showLabel > .fa:before{ content: "\f06e"; }
   }
   &[showLabel="false"]{
     .label{ display: none; }
     .button_showLabel {
       color: gray;
-      > .fa:before{
-        content: "\f070";
-      }
+      > .fa:before{ content: "\f070"; }
     }
   }
 
@@ -421,72 +409,54 @@
   }
 
   &[showGridLines="true"]{
-      .button_showGridLines > .fa:before{
-          content: "\f058"; // Check
-      }
+      .button_showGridLines > .fa:before{ content: "\f058"; } // Check
   }
   &[showGridLines="false"]{
-      .button_showGridLines {
-          color: gray;
-          > .fa:before{
-              content: "\f057"; // Cross
-          }
-      }
-      > .chartAxis > .scale > .tick > .text{
-          display: none;
-      }
-      > .chartAxis > .scale > .tick:not([value="0"]) > .line{
-          display: none;
-      }
+    .button_showGridLines {
+      color: gray;
+      > .fa:before{ content: "\f057"; } // Cross
+    }
+    > .chartAxis > .scale > .tick > .text{ display: none; }
+    > .chartAxis > .scale > .tick:not([value="0"]) > .line{ display: none; }
   }
 
   &[wrappedInverse="true"]{
-      .button_wrappedInverse > .fa:before{
-          content: "\f058"; // Check
-      }
+    .button_wrappedInverse > .fa:before{ content: "\f058"; }
   }
   &[wrappedInverse="false"]{
-      .button_wrappedInverse {
-          color: gray;
-          > .fa:before{
-              content: "\f057"; // Cross
-          }
-      }
+    .button_wrappedInverse {
+      color: gray;
+      > .fa:before{ content: "\f057"; } // Cross
+    }
   }
 
   .negativeRatio{
       .user-select(none);
   }
   &[datanegative="true"]{
-      .config_datanegative > .fa:before{
-          content: "\f058"; // Check
-      }
+      .config_datanegative > .fa:before{ content: "\f058"; } // Check
       .negativeRatio{
           display: inline-block;
           width:50px;
           height:10px;
       }
-      > .configPanel > .configGroup > .configOpt{
-          &.button_showColor{ display: inline-block; }
-      }
+      > .configPanel > .configGroup > .configOpt.button_showColor{ display: inline-block; }
   }
   &[datanegative="false"]{
-      .config_datanegative{
-          color: gray;
-          > .fa:before{
-              content: "\f057"; // Cross
-          }
-      }
-      .negativeRatio{
-          display: none;
-      }        
+    .config_datanegative{
+      color: gray;
+      > .fa:before{ content: "\f057"; } // Cross
+    }
+    .negativeRatio{
+      display: none;
+    }        
   }
 
   &[showTinyBar="true"]:not([type="treemap"]){
-      .record > .block{ 
-          height: 2px;
-          top: calc(~"50% - 1px");
-      }
+    .record > .block{ 
+      height: 2px;
+      top: calc(~"50% - 1px");
+    }
   }
 }
 

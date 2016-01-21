@@ -235,13 +235,6 @@
   -o-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;
 }
-.Chubuk .record > .block:after {
-  color: white;
-  text-align: right;
-  font-size: 10px;
-  display: block;
-  padding: 1px;
-}
 .Chubuk .record > .dot_tip {
   display: block;
   position: absolute;
