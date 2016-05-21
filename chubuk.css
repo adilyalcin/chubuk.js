@@ -13,13 +13,16 @@
   flex-direction: column;
   position: relative;
   font-family: 'Roboto', sans-serif;
+  line-height: 1em;
 }
 .Chubuk .selectedVizType {
-  background-color: lightgray;
-  border-color: gray;
+  background-color: #D6DED3;
+  color: black;
   box-shadow: 1px 1px 1px black;
+  font-weight: 400;
 }
 .Chubuk > .configPanel {
+  font-family: 'Roboto', sans-serif;
   display: block;
   position: absolute;
   -webkit-user-select: none;
@@ -33,7 +36,7 @@
   border-radius: 5px;
   border: solid 1px lightgray;
   margin: 0px;
-  background-color: rgba(238, 238, 238, 0.9);
+  background-color: rgba(238, 238, 238, 0.5);
 }
 .Chubuk > .configPanel[active="false"] {
   border: solid 0px lightgray;
@@ -47,15 +50,16 @@
 }
 .Chubuk > .configPanel > .configVisiblityButton {
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  right: 2px;
+  bottom: 2px;
   cursor: pointer;
 }
 .Chubuk > .configPanel > .configVisiblityButton:hover {
   color: orangered;
 }
 .Chubuk > .configPanel > .selectVizType {
-  padding: 5px;
+  padding: 2px;
+  border-bottom: solid 1px lightgray;
   display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
@@ -69,25 +73,36 @@
   -ms-flex-direction: row;
   flex-direction: row;
 }
+.Chubuk > .configPanel > .selectVizType > .selectVizType-Header {
+  display: block;
+  padding: 4px;
+  font-weight: 300;
+}
 .Chubuk > .configPanel > .selectVizType > .vizType {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  padding: 2px;
   border: solid 1px lightgray;
+  font-weight: 300;
   border-radius: 10px;
   text-align: center;
   margin: 1px 5px;
   cursor: pointer;
+  background-color: white;
+  color: gray;
 }
 .Chubuk > .configPanel > .selectVizType > .vizType:hover {
   box-shadow: 1px 1px 1px black;
+  font-weight: 400;
+  color: #ff4500;
 }
 .Chubuk > .configPanel > .configGroup {
   border: solid 1px gray;
   border-radius: 8px;
-  margin-left: 10px;
+  margin: 3px 0px 3px 3px;
   padding: 2px 2px 2px 3px;
   display: inline-block;
   background-color: #EEE;
@@ -143,7 +158,7 @@
 }
 .Chubuk > .configPanel > .configGroup > .configOpt input:not([name="dist_mode"]) {
   border-width: 0px;
-  width: 35px;
+  width: 25px;
 }
 .Chubuk > .configPanel > .configGroup .refreshData {
   cursor: pointer;
@@ -218,10 +233,10 @@
 .Chubuk .record {
   display: block;
   position: absolute;
-  -webkit-transition: left 700ms ease-in-out, width 700ms ease-in-out, height 700ms ease-in-out, top 700ms ease-in-out;
-  -moz-transition: left 700ms ease-in-out, width 700ms ease-in-out, height 700ms ease-in-out, top 700ms ease-in-out;
-  -o-transition: left 700ms ease-in-out, width 700ms ease-in-out, height 700ms ease-in-out, top 700ms ease-in-out;
-  transition: left 700ms ease-in-out, width 700ms ease-in-out, height 700ms ease-in-out, top 700ms ease-in-out;
+  -webkit-transition: left 1200ms ease-in-out, width 1200ms ease-in-out, height 1200ms ease-in-out, top 1200ms ease-in-out;
+  -moz-transition: left 1200ms ease-in-out, width 1200ms ease-in-out, height 1200ms ease-in-out, top 1200ms ease-in-out;
+  -o-transition: left 1200ms ease-in-out, width 1200ms ease-in-out, height 1200ms ease-in-out, top 1200ms ease-in-out;
+  transition: left 1200ms ease-in-out, width 1200ms ease-in-out, height 1200ms ease-in-out, top 1200ms ease-in-out;
 }
 .Chubuk .record > .block {
   display: block;
@@ -261,8 +276,8 @@
   padding-right: 1px;
   padding-top: 1px;
   font-size: 0.8em;
-  font-weight: 300;
-  text-shadow: 0px 0px 2px white;
+  font-weight: 400;
+  text-shadow: 0px 0px 6px white, 0px 0px 2px white;
   z-index: 101;
   white-space: nowrap;
   overflow: hidden;
@@ -301,7 +316,7 @@
   left: -1px;
 }
 .Chubuk > .chartAxis > .scale > .tick[value="0"] > .text {
-  font-weight: 700;
+  font-weight: 500;
 }
 .Chubuk > .chartAxis > .scale > .tick[value="0"] > .text[textpos="upper"] {
   margin-top: -1px;
@@ -309,15 +324,18 @@
 .Chubuk > .chartAxis > .scale > .tick > .text {
   display: block;
   position: relative;
-  margin-top: 1px;
+  margin-top: 4px;
   cursor: pointer;
   left: -50%;
   text-align: center;
+  font-weight: 100;
+  font-size: 0.9em;
 }
 .Chubuk[chart_type="long_list"] .vizType.long_list {
-  background-color: lightgray;
-  border-color: gray;
+  background-color: #D6DED3;
+  color: black;
   box-shadow: 1px 1px 1px black;
+  font-weight: 400;
 }
 .Chubuk[chart_type="long_list"] .record > .block {
   background-color: #92C5E2;
@@ -351,9 +369,10 @@
   display: none;
 }
 .Chubuk[chart_type="treemap"] .vizType.treemap {
-  background-color: lightgray;
-  border-color: gray;
+  background-color: #D6DED3;
+  color: black;
   box-shadow: 1px 1px 1px black;
+  font-weight: 400;
 }
 .Chubuk[chart_type="treemap"] .record {
   border: solid 1px white;
@@ -383,9 +402,6 @@
 .Chubuk[chart_type="treemap"] > .configPanel > .configGroup > .configOpt.barPadding {
   display: none;
 }
-.Chubuk[chart_type="treemap"] > .configPanel > .configGroup > .configOpt.button_showTinyBar {
-  display: none;
-}
 .Chubuk[chart_type="treemap"] > .configPanel > .configGroup > .configOpt.button_showTip {
   display: none;
 }
@@ -393,9 +409,10 @@
   display: none;
 }
 .Chubuk[chart_type="piled_bars"] .vizType.piled_bars {
-  background-color: lightgray;
-  border-color: gray;
+  background-color: #D6DED3;
+  color: black;
   box-shadow: 1px 1px 1px black;
+  font-weight: 400;
 }
 .Chubuk[chart_type="piled_bars"] .record > .block {
   top: 0px;
@@ -419,9 +436,10 @@
   right: auto;
 }
 .Chubuk[chart_type="wrapped_bars"] .vizType.wrapped_bars {
-  background-color: lightgray;
-  border-color: gray;
+  background-color: #D6DED3;
+  color: black;
   box-shadow: 1px 1px 1px black;
+  font-weight: 400;
 }
 .Chubuk[chart_type="wrapped_bars"] .record > .block {
   background-color: #92C5E2;
@@ -445,10 +463,10 @@
 .Chubuk[chart_type="wrapped_bars"] > .configPanel > .configGroup > .configOpt.columnGap {
   display: inline-block;
 }
-.Chubuk[showTip="true"] .dot_tip {
+.Chubuk[showTip="true"]:not([chart_type="treemap"]) .dot_tip {
   opacity: 1;
 }
-.Chubuk[showTip="true"] .button_showTip > .fa:before {
+.Chubuk[showTip="true"]:not([chart_type="treemap"]) .button_showTip > .fa:before {
   content: "\f06e";
 }
 .Chubuk[showTip="false"] .button_showTip {
@@ -497,15 +515,6 @@
 }
 .Chubuk[showTooltip="false"] .button_showTooltip > .fa:before {
   content: "\f070";
-}
-.Chubuk[showTinyBar="true"] .button_showTinyBar > .fa:before {
-  content: "\f058";
-}
-.Chubuk[showTinyBar="false"] .button_showTinyBar {
-  color: gray;
-}
-.Chubuk[showTinyBar="false"] .button_showTinyBar > .fa:before {
-  content: "\f057";
 }
 .Chubuk[showGridLines="true"] .button_showGridLines > .fa:before {
   content: "\f058";
@@ -556,10 +565,6 @@
 }
 .Chubuk[datanegative="false"] .negativeRatio {
   display: none;
-}
-.Chubuk[showTinyBar="true"]:not([type="treemap"]) .record > .block {
-  height: 2px;
-  top: calc(50% - 1px);
 }
 .tipsy {
   font-family: 'Roboto', sans-serif;

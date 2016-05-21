@@ -1,19 +1,22 @@
-@import "lesshat/lesshat";
+@import "stylesheets/lesshat";
 
 .Chubuk{
   .display(flex);
   .flex-direction(column);
   position: relative;
   font-family: 'Roboto', sans-serif;
+  line-height: 1em;
 
   // to reuse the style for different sections
   .selectedVizType{
-    background-color: lightgray;
-    border-color: gray;
+    background-color: #D6DED3;
+    color: black;
     box-shadow: 1px 1px 1px black;
+    font-weight: 400;
   }
 
   > .configPanel{
+    font-family: 'Roboto', sans-serif;
     display: block;
     position: absolute;
     .user-select(none);
@@ -24,7 +27,7 @@
     border-radius: 5px;
     border: solid 1px lightgray;
     margin: 0px;
-    background-color: rgba(238, 238, 238, 0.9);
+    background-color: rgba(238, 238, 238, 0.5);
 
     &[active="false"]{
       border: solid 0px lightgray;
@@ -35,31 +38,41 @@
 
     > .configVisiblityButton{
       position: absolute;
-      right: 5px;
-      bottom: 5px;
+      right: 2px;
+      bottom: 2px;
       cursor: pointer;
       &:hover{ color: orangered; }
     }
 
     > .selectVizType{
-      padding: 5px;
+      padding: 2px;
+      border-bottom: solid 1px lightgray;
       .display(flex);
       .flex-direction(row);
+      > .selectVizType-Header{
+        display: block;
+        padding: 4px;
+        font-weight: 300;
+      }
       > .vizType{
         .flex(1);
+        padding: 2px;
         border: solid 1px lightgray;
+        font-weight: 300;
         border-radius: 10px;
         text-align: center;
         margin: 1px 5px;
         cursor: pointer;
-        &:hover{ box-shadow: 1px 1px 1px black; }
+        background-color: white;
+        color: gray;
+        &:hover{ box-shadow: 1px 1px 1px black; font-weight: 400; color: orangered }
       }
     }
 
     > .configGroup{
       border: solid 1px gray;
       border-radius: 8px;
-      margin-left: 10px;
+      margin: 3px 0px 3px 3px;
       padding: 2px 2px 2px 3px;
       display: inline-block;
       background-color: #EEE;
@@ -103,7 +116,7 @@
         &.columnGap { display: none; } // only in wrapped
         input:not([name="dist_mode"]){
           border-width: 0px;
-          width: 35px;
+          width: 25px;
         }
       }
       .refreshData{
@@ -155,7 +168,7 @@
   .record{
     display: block;
     position: absolute;
-    .transition(~"left 700ms ease-in-out, width 700ms ease-in-out, height 700ms ease-in-out, top 700ms ease-in-out");
+    .transition(~"left 1200ms ease-in-out, width 1200ms ease-in-out, height 1200ms ease-in-out, top 1200ms ease-in-out");
     > .block{
       display: block;
       position: absolute;
@@ -188,8 +201,8 @@
       padding-right: 1px;
       padding-top: 1px;
       font-size: 0.8em;
-      font-weight: 300;
-      text-shadow: 0px 0px 2px white;
+      font-weight: 400;
+      text-shadow: 0px 0px 6px white, 0px 0px 2px white;
       z-index: 101;
 
       white-space: nowrap;
@@ -230,17 +243,19 @@
             left: -1px;
           }
           > .text{
-            font-weight: 700;
+            font-weight: 500;
             &[textpos="upper"]{ margin-top: -1px; }
           }
         }
         > .text{
           display: block;
           position: relative;
-          margin-top: 1px;
+          margin-top: 4px;
           cursor: pointer;
           left: -50%;
           text-align: center;
+          font-weight: 100;
+          font-size: 0.9em;
         }
       }
     }
@@ -288,11 +303,10 @@
       > .rowGroup > .rowIndexLabel{ display: none; }
     }
     > .configPanel > .configGroup > .configOpt{
-      &.numBands      { display: none;         }
-      &.barPadding    { display: none;         }
-      &.button_showTinyBar  { display: none;         }
-      &.button_showTip      { display: none;         }
-      &.button_showGridLines{ display: none;         }
+      &.numBands             { display: none;         }
+      &.barPadding           { display: none;         }
+      &.button_showTip       { display: none;         }
+      &.button_showGridLines { display: none;         }
     }
   } // &[chart_type="treemap"]
 
@@ -349,7 +363,7 @@
     }
   } // [chart_type="wrapped_bars"]
 
-  &[showTip="true"]{
+  &[showTip="true"]:not([chart_type="treemap"]){
     .dot_tip{ opacity: 1; }
     .button_showTip > .fa:before{ content: "\f06e"; }
   }
@@ -398,16 +412,6 @@
     }
   }
 
-  &[showTinyBar="true"]{
-    .button_showTinyBar > .fa:before{ content: "\f058"; }// Check
-  }
-  &[showTinyBar="false"]{
-    .button_showTinyBar {
-      color: gray;
-      > .fa:before{ content: "\f057"; } // Cross
-    }
-  }
-
   &[showGridLines="true"]{
       .button_showGridLines > .fa:before{ content: "\f058"; } // Check
   }
@@ -450,13 +454,6 @@
     .negativeRatio{
       display: none;
     }        
-  }
-
-  &[showTinyBar="true"]:not([type="treemap"]){
-    .record > .block{ 
-      height: 2px;
-      top: calc(~"50% - 1px");
-    }
   }
 }
 

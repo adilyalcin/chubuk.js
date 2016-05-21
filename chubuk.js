@@ -168,7 +168,6 @@ function Chubuk(config){
   this.showGridLines = config.showGridLines || true;
   // Not actively used, just keeping it for the future / experimentation...
   this.showTip = config.showTip || false;
-  this.showTinyBar = config.showTinyBar || false;
 
   this.theData = [];
 
@@ -188,7 +187,7 @@ Chubuk.prototype = {
     this.DOM.root = d3.select(this.DOM.target);
 
     // attach settings to DOM
-    ["chart_type", "showTip", "showLabel", "showTooltip", "showColor", "showTinyBar",
+    ["chart_type", "showTip", "showLabel", "showTooltip", "showColor",
      "showGridLines", "showGradient", "wrappedInverse", "datanegative"
     ].forEach(function(v){ 
       me.DOM.root.attr(v,me[v]); 
@@ -197,7 +196,8 @@ Chubuk.prototype = {
     this.DOM.configPanel = this.DOM.root.select(".configPanel");
 
     // Add VizType selection
-    this.DOM.selectVizType = this.DOM.configPanel.select(".selectVizType")
+    this.DOM.selectVizType = this.DOM.configPanel.select(".selectVizType");
+    this.DOM.selectVizType.append("div").attr("class","selectVizType-Header").text("Chart Type:");
 
     this.DOM.selectVizType.selectAll(".vizType").data([
         {_class:"long_list", name:"Long List"},
@@ -214,23 +214,22 @@ Chubuk.prototype = {
     this.DOM.configGroup_Display = this.DOM.configPanel.append("span")
       .attr("class","configGroup configGroup_Display")
       .attr("active",false);
-    this.DOM.configGroup_Display.append("span").attr("class","configHeading").html("Display");
+    this.DOM.configGroup_Display.append("span").attr("class","configHeading").html("Display ");
 
     x = this.DOM.configGroup_Display.selectAll(".configOpt").data([
         { id:"button_showTooltip", name:"Tooltip"},
         { id:"button_showLabel", name:"Label"},
-        { id:"button_showTip", name:"Dot"},
-        { id:"button_showTinyBar", name:"TinyBar"},
+        { id:"button_showTip", name:"Tip"},
         { id:"button_showGridLines", name:"Axis"},
         { id:"button_showColor", name:"&lt;0 Color"},
-        { id:"button_wrappedInverse", name:"Col.-Inverse"},
-        { id:"barHeightList", name:"Row <i class='fa fa-arrows-v'></i>: ", 
+        { id:"button_wrappedInverse", name:"Switch Col"},
+        { id:"barHeightList", name:"Row <i class='fa fa-arrows-v'></i>:", 
           input: {class:"in_listRowHeight", type: "number", min:"10", max:"60", value:"18"}},
-        { id:"numBands", name:"#ofCol: ",
+        { id:"numBands", name:"# Col:",
           input: {class:"in_numBands", type: "number", min:"1", max:"20", value:"5"}},
-        { id:"columnGap", name:"Col-Gap<i class='fa fa-arrows-h'></i>: ",
+        { id:"columnGap", name:"Col-Gap:",
           input: {class:"in_columnGap", type: "number", min:"0", max:"40", value:"10"}},
-        { id:"barPadding", name:"Bar-Pad: ",
+        { id:"barPadding", name:"Bar-Pad:",
           input: {class:"in_barPadding", type: "number", min:"0", max:"10", value:"3"}},
       ]).enter()
         .append("span")
@@ -275,8 +274,6 @@ Chubuk.prototype = {
           }
         })
         ;
-
-    this.DOM.configPanel = this.DOM.root.select(".configPanel");
 
     this.DOM.configPanel.append("div").attr("class","configVisiblityButton fa fa-cog")
       .each(function(){
