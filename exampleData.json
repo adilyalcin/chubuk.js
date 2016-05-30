@@ -1,0 +1,602 @@
+[
+  {
+    "Value": -685.5462975587807,
+    "Label": "Seychelles"
+  },
+  {
+    "Value": -270.3464916459303,
+    "Label": "Anguilla"
+  },
+  {
+    "Value": -752.3761109023231,
+    "Label": "France"
+  },
+  {
+    "Value": -554.7648972984433,
+    "Label": "Kenya"
+  },
+  {
+    "Value": -505.1007562006878,
+    "Label": "India"
+  },
+  {
+    "Value": -406.866612799243,
+    "Label": "Wallis and Futuna"
+  },
+  {
+    "Value": 828.4478811345457,
+    "Label": "Macedonia"
+  },
+  {
+    "Value": -410.8115954139913,
+    "Label": "Barbados"
+  },
+  {
+    "Value": 590.8743059822439,
+    "Label": "Costa Rica"
+  },
+  {
+    "Value": 392.03709699057265,
+    "Label": "Bulgaria"
+  },
+  {
+    "Value": -674.6895024705092,
+    "Label": "Bosnia and Herzegovina"
+  },
+  {
+    "Value": 489.65845875796794,
+    "Label": "Mozambique"
+  },
+  {
+    "Value": 613.8862958538663,
+    "Label": "Ukraine"
+  },
+  {
+    "Value": -899.8937901607633,
+    "Label": "French Southern and Antarctic Lands"
+  },
+  {
+    "Value": -577.3618334586197,
+    "Label": "Western Sahara"
+  },
+  {
+    "Value": -607.0969307416669,
+    "Label": "Russia"
+  },
+  {
+    "Value": -730.1646521183744,
+    "Label": "Palau"
+  },
+  {
+    "Value": 567.1049770049987,
+    "Label": "Belize"
+  },
+  {
+    "Value": -574.7130062091527,
+    "Label": "Northern Mariana Islands"
+  },
+  {
+    "Value": 866.638547724458,
+    "Label": "Vietnam"
+  },
+  {
+    "Value": 322.51814439717214,
+    "Label": "Timor-Leste"
+  },
+  {
+    "Value": -315.71737180301955,
+    "Label": "Mauritius"
+  },
+  {
+    "Value": 585.9430441905643,
+    "Label": "Mali"
+  },
+  {
+    "Value": 796.2607002654164,
+    "Label": "Cambodia"
+  },
+  {
+    "Value": 825.2891715354525,
+    "Label": "Madagascar"
+  },
+  {
+    "Value": -325.3213416766041,
+    "Label": "Christmas Island"
+  },
+  {
+    "Value": -742.4566130535222,
+    "Label": "Tajikistan"
+  },
+  {
+    "Value": 607.4752188437076,
+    "Label": "Rwanda"
+  },
+  {
+    "Value": -433.8387357700917,
+    "Label": "Mauritania"
+  },
+  {
+    "Value": 666.0885872609463,
+    "Label": "Papua New Guinea"
+  },
+  {
+    "Value": -740.6560641617607,
+    "Label": "Latvia"
+  },
+  {
+    "Value": -774.7142890575047,
+    "Label": "Israel"
+  },
+  {
+    "Value": -603.7892590190069,
+    "Label": "Malta"
+  },
+  {
+    "Value": -493.73166467539534,
+    "Label": "Jamaica"
+  },
+  {
+    "Value": 684.8496606904263,
+    "Label": "Mongolia"
+  },
+  {
+    "Value": -558.7218298516473,
+    "Label": "Liechtenstein"
+  },
+  {
+    "Value": -650.8616148514806,
+    "Label": "Burkina Faso"
+  },
+  {
+    "Value": 626.2004699893974,
+    "Label": "Benin"
+  },
+  {
+    "Value": -643.7988559465673,
+    "Label": "Equatorial Guinea"
+  },
+  {
+    "Value": 833.8388410783109,
+    "Label": "Portugal"
+  },
+  {
+    "Value": 451.6399906139747,
+    "Label": "Tunisia"
+  },
+  {
+    "Value": 539.8400674710547,
+    "Label": "Gambia, The"
+  },
+  {
+    "Value": -810.1715501558066,
+    "Label": "Guyana"
+  },
+  {
+    "Value": 776.3094588175798,
+    "Label": "Puerto Rico"
+  },
+  {
+    "Value": 436.5724214897674,
+    "Label": "United States"
+  },
+  {
+    "Value": -526.3158752961077,
+    "Label": "Albania"
+  },
+  {
+    "Value": 787.9949539541763,
+    "Label": "Micronesia, Federated States of"
+  },
+  {
+    "Value": -735.6388076567983,
+    "Label": "Haiti"
+  },
+  {
+    "Value": 394.8459905692265,
+    "Label": "Niue"
+  },
+  {
+    "Value": 596.1188112018349,
+    "Label": "Sao Tome and Principe"
+  },
+  {
+    "Value": -333.63966604981107,
+    "Label": "Luxembourg"
+  },
+  {
+    "Value": -902.2264217010769,
+    "Label": "Serbia"
+  },
+  {
+    "Value": 534.3774508239381,
+    "Label": "Brunei"
+  },
+  {
+    "Value": -830.1942746699503,
+    "Label": "Venezuela"
+  },
+  {
+    "Value": -515.6815444736295,
+    "Label": "Cyprus"
+  },
+  {
+    "Value": 463.8546797650956,
+    "Label": "Bangladesh"
+  },
+  {
+    "Value": -484.3815866686453,
+    "Label": "Czech Republic"
+  },
+  {
+    "Value": -333.80018873613085,
+    "Label": "Bermuda"
+  },
+  {
+    "Value": 795.6517860223234,
+    "Label": "Mexico"
+  },
+  {
+    "Value": 563.7975718631892,
+    "Label": "Iraq"
+  },
+  {
+    "Value": 666.7696600445348,
+    "Label": "Gibraltar"
+  },
+  {
+    "Value": 806.0890412786764,
+    "Label": "New Caledonia"
+  },
+  {
+    "Value": 455.8692792090352,
+    "Label": "New Zealand"
+  },
+  {
+    "Value": 545.229134704921,
+    "Label": "Syria"
+  },
+  {
+    "Value": 651.6592331348403,
+    "Label": "Faroe Islands"
+  },
+  {
+    "Value": -344.29563533766225,
+    "Label": "Saint Vincent and the Grenadines"
+  },
+  {
+    "Value": 776.4043433965418,
+    "Label": "Clipperton Island"
+  },
+  {
+    "Value": 476.6049498272602,
+    "Label": "Virgin Islands"
+  },
+  {
+    "Value": 736.8457072765461,
+    "Label": "South Sudan"
+  },
+  {
+    "Value": 530.3338720309131,
+    "Label": "Turkey"
+  },
+  {
+    "Value": -499.68437220660115,
+    "Label": "Gaza Strip"
+  },
+  {
+    "Value": -684.8565440614034,
+    "Label": "Namibia"
+  },
+  {
+    "Value": 726.5795800030613,
+    "Label": "Chad"
+  },
+  {
+    "Value": 738.6469303403824,
+    "Label": "Coral Sea Islands"
+  },
+  {
+    "Value": 276.0067475317974,
+    "Label": "Nepal"
+  },
+  {
+    "Value": 665.929070227616,
+    "Label": "Cook Islands"
+  },
+  {
+    "Value": -682.5983584863043,
+    "Label": "American Samoa"
+  },
+  {
+    "Value": -452.9572614845931,
+    "Label": "Germany"
+  },
+  {
+    "Value": -323.73821461799565,
+    "Label": "Guernsey"
+  },
+  {
+    "Value": 603.1849882903222,
+    "Label": "Sierra Leone"
+  },
+  {
+    "Value": 281.85677330900626,
+    "Label": "Saint Barthelemy"
+  },
+  {
+    "Value": 721.8298775198925,
+    "Label": "Monaco"
+  },
+  {
+    "Value": -381.12123921414656,
+    "Label": "Sri Lanka"
+  },
+  {
+    "Value": 532.6563601224904,
+    "Label": "Australia"
+  },
+  {
+    "Value": 718.902153701344,
+    "Label": "Lebanon"
+  },
+  {
+    "Value": 735.13330478464,
+    "Label": "Guatemala"
+  },
+  {
+    "Value": 641.0249737325802,
+    "Label": "United Arab Emirates"
+  },
+  {
+    "Value": 839.8444776914965,
+    "Label": "Egypt"
+  },
+  {
+    "Value": -475.68430013362047,
+    "Label": "Finland"
+  },
+  {
+    "Value": -470.76275508831975,
+    "Label": "Cabo Verde"
+  },
+  {
+    "Value": 726.5282987791771,
+    "Label": "Italy"
+  },
+  {
+    "Value": 342.39569465060833,
+    "Label": "Ireland"
+  },
+  {
+    "Value": -1066.435786444327,
+    "Label": "Ecuador"
+  },
+  {
+    "Value": -555.3970191222015,
+    "Label": "Turkmenistan"
+  },
+  {
+    "Value": 768.1839652888727,
+    "Label": "Congo, Republic of the"
+  },
+  {
+    "Value": -691.6538922343578,
+    "Label": "Antigua and Barbuda"
+  },
+  {
+    "Value": 750.867396426581,
+    "Label": "Burma"
+  },
+  {
+    "Value": -248.5047784928078,
+    "Label": "Belgium"
+  },
+  {
+    "Value": 829.9309751729912,
+    "Label": "El Salvador"
+  },
+  {
+    "Value": 849.4949962820785,
+    "Label": "Saint Kitts and Nevis"
+  },
+  {
+    "Value": 743.179224298379,
+    "Label": "Cocos (Keeling) Islands"
+  },
+  {
+    "Value": 742.4762478459202,
+    "Label": "San Marino"
+  },
+  {
+    "Value": 470.05361525048875,
+    "Label": "Slovakia"
+  },
+  {
+    "Value": -603.2542342148917,
+    "Label": "Kyrgyzstan"
+  },
+  {
+    "Value": 614.8791983350185,
+    "Label": "Cameroon"
+  },
+  {
+    "Value": -916.8500668404114,
+    "Label": "Korea, South"
+  },
+  {
+    "Value": -619.7783633667866,
+    "Label": "South Africa"
+  },
+  {
+    "Value": 653.692729590728,
+    "Label": "Uruguay"
+  },
+  {
+    "Value": 965.8714053279034,
+    "Label": "Armenia"
+  },
+  {
+    "Value": -373.0567543394647,
+    "Label": "Spain"
+  },
+  {
+    "Value": -433.027088788066,
+    "Label": "Jan Mayen"
+  },
+  {
+    "Value": 677.0957318619388,
+    "Label": "French Polynesia"
+  },
+  {
+    "Value": -727.5696681999923,
+    "Label": "Uganda"
+  },
+  {
+    "Value": -732.0950044167737,
+    "Label": "Sint Maarten"
+  },
+  {
+    "Value": -488.98321457848726,
+    "Label": "Pakistan"
+  },
+  {
+    "Value": 256.52073429886417,
+    "Label": "Niger"
+  },
+  {
+    "Value": 253.76828856270475,
+    "Label": "Marshall Islands"
+  },
+  {
+    "Value": -562.588001223231,
+    "Label": "Jordan"
+  },
+  {
+    "Value": 666.7986322464315,
+    "Label": "Suriname"
+  },
+  {
+    "Value": 527.3481616371797,
+    "Label": "Ashmore and Cartier Islands"
+  },
+  {
+    "Value": -649.8174698585274,
+    "Label": "Paracel Islands"
+  },
+  {
+    "Value": -658.9087027230829,
+    "Label": "Singapore"
+  },
+  {
+    "Value": -580.1482786333567,
+    "Label": "Paraguay"
+  },
+  {
+    "Value": 599.124646165557,
+    "Label": "Lithuania"
+  },
+  {
+    "Value": 719.5586884152824,
+    "Label": "Zimbabwe"
+  },
+  {
+    "Value": 455.26868038461174,
+    "Label": "Svalbard"
+  },
+  {
+    "Value": -513.569298099507,
+    "Label": "Vanuatu"
+  },
+  {
+    "Value": 705.0688510641829,
+    "Label": "Iceland"
+  },
+  {
+    "Value": 622.2012917713806,
+    "Label": "Afghanistan"
+  },
+  {
+    "Value": -728.376899097987,
+    "Label": "Chile"
+  },
+  {
+    "Value": -810.8487092758215,
+    "Label": "Denmark"
+  },
+  {
+    "Value": -693.0141012768837,
+    "Label": "Yemen"
+  },
+  {
+    "Value": -507.77231144150085,
+    "Label": "Angola"
+  },
+  {
+    "Value": 615.8670026864593,
+    "Label": "Nigeria"
+  },
+  {
+    "Value": 580.7954312521548,
+    "Label": "Nauru"
+  },
+  {
+    "Value": 717.5105951530622,
+    "Label": "Kosovo"
+  },
+  {
+    "Value": -478.7619683725337,
+    "Label": "Lesotho"
+  },
+  {
+    "Value": -594.8119247816177,
+    "Label": "South Georgia and South Sandwich Islands"
+  },
+  {
+    "Value": 544.7088643920014,
+    "Label": "United States Pacific Island Wildlife Refuges"
+  },
+  {
+    "Value": -525.6866881829753,
+    "Label": "Tonga"
+  },
+  {
+    "Value": 628.174487332466,
+    "Label": "Moldova"
+  },
+  {
+    "Value": -430.82737315328444,
+    "Label": "Montserrat"
+  },
+  {
+    "Value": 784.5099545910622,
+    "Label": "Laos"
+  },
+  {
+    "Value": 828.4235968355395,
+    "Label": "Central African Republic"
+  },
+  {
+    "Value": 554.0978786638773,
+    "Label": "Bouvet Island"
+  },
+  {
+    "Value": -596.5675909506176,
+    "Label": "Solomon Islands"
+  },
+  {
+    "Value": 709.2756424395612,
+    "Label": "Djibouti"
+  },
+  {
+    "Value": 273.9360331733129,
+    "Label": "British Indian Ocean Territory"
+  },
+  {
+    "Value": 485.7229104300717,
+    "Label": "Samoa"
+  },
+  {
+    "Value": -283.3977971260665,
+    "Label": "Honduras"
+  }
+]

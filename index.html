@@ -55,32 +55,10 @@ var dataGenerator = {
       },this);
     }
     chubuk.theData = this.theData;
-    /*
-    chubuk.theData = [
-      {Value: 789, Label: "-"},
-      {Value: 600.9079880684096, Label: "-"},
-      {Value: 565.8800929588422, Label: "-"},
-      {Value: 558.2643867255665, Label: "-"},
-      {Value: 543.3198231116028, Label: "-"},
-      {Value: 525.5917741023895, Label: "-"},
-      {Value: 427.01276185324275, Label: "-"},
-      {Value: 404.4002297714085, Label: "-"},
-      {Value: 280.69047226665157, Label: "-"},
-      {Value: 258.4188789552743, Label: "-"},
-    ];
-    */
     chubuk.sortData_decr(true);
+    chubuk.insertDOM_Records();
     $(".Chubuk").attr("datanegative",dataGenerator.datanegative);
   },
-};
-
-function doGenerate(event){
-  dataGenerator.generateData();
-  chubuk.insertDOM_Records();
-  if(event){
-    event.preventDefault();
-    event.stopPropagation();
-  }
 };
 
 $(document).ready( function(){
@@ -91,23 +69,23 @@ $(document).ready( function(){
   chubuk.setConfig("chart_type","piled_bars");
   chubuk.setConfig("showLabel",true);
 
-  doGenerate();
+  dataGenerator.generateData();
 
   // Insert configuration DOM
 
   // Data generation related callbacks
   $("input[name=dist_mode]").on("change", function(event) {
     dataGenerator.selected = dataGenerator[this.value];
-    doGenerate(event);
+    dataGenerator.generateData();
   });
   $(".negativeRatio").on("change",function(event){
     dataGenerator.negativeRatio = 1*this.value/100;
-    doGenerate(event);
+    dataGenerator.generateData();
   });
   $(".config_datanegative").click(function(event){
     dataGenerator.datanegative = !dataGenerator.datanegative;
     $(".Chubuk").attr("datanegative",dataGenerator.datanegative);
-    doGenerate(event);
+    dataGenerator.generateData();
   });
   $(".configHeading").click(function(){
     this.parentNode.setAttribute("active", this.parentNode.getAttribute("active")==="false");
@@ -115,7 +93,31 @@ $(document).ready( function(){
   $(".in_numItems").on("change",function(){
     dataGenerator.numOfItems = 1*this.value;
     dataGenerator.generateData();
-    chubuk.insertDOM_Records();
+  });
+
+  $("#fileUploadClick").click(function(event){
+    event.stopPropagation();
+    event.preventDefault();
+    $("#fileInput").click();
+  });
+
+  $("#fileInput").on("change",function(event){
+    var f = event.target.files[0];
+    if(f.type!=="application/json"){ 
+      alert("Only JSON files are supported for now.");
+      return;
+    }
+    var reader = new FileReader();
+    // Closure to capture the file information.
+    reader.onload = (function(theFile) {
+      return function(e) {
+        chubuk.theData = JSON.parse(e.target.result);
+        chubuk.sortData_decr(true);
+        chubuk.insertDOM_Records();
+      };
+    })(f);
+
+    reader.readAsText(f);
   });
 });
 
@@ -234,7 +236,6 @@ html, body {
   }
 }
 
-
 </style>
 	</head>
   <body>
@@ -272,10 +273,21 @@ html, body {
                 <span class="fa"></span><span class="opt_label">&lt;0</span>
                 <input type="range" min="0" max="100" value="50" class="negativeRatio">
                 </span>
-              <span class="refreshData fa fa-refresh" onclick="doGenerate(event)"></span>
+              <span class="refreshData fa fa-refresh" onclick="dataGenerator.generateData()"></span>
               </span> <!-- / Data Control -->
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="row" style='margin: 0 1em 1em 1em;'>
+        <div class="twelve columns">
+          The default data is randomly generated. You can change the data setting above.<br>
+          <span style="display: none;"><input type="file" id='fileInput'></span>
+
+          <a href='#' id="fileUploadClick">Click here</a> to import your own data in JSON format :
+          <code>[ {Label: "A", Value: 3}, {Label: "B", Value: 5.6}, ...]</code> 
+          <a href='./exampleData.json' target='_blank'>Example</a>
         </div>
       </div>
 
