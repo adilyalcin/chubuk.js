@@ -1,35 +1,39 @@
-﻿/*
-// TODO
+﻿/*********************************
 
-Vary the luminance across columns - May make it easier to perceive the column structure. 
-  We cannot use color for another varible, so, just use it the best way you can.
+chubuk.js
 
-Stephen Few:
-- when the scale is small, such as in the rightmost column of bars, 
-   it is helpful to add minor tick marks or grid lines to support more precise comparisons of short bars. 
-(re: what if column skip happens when adjacent blocks have a wider gap, made invisible by switch of column)
-- Intelligence could be incorporated into the algorithm that determines the break points, 
-  but even that might not be worth the effort to correct such a rare problem. 
+Copyright (c) 2016, University of Maryland
+All rights reserved.
 
-- Maybe have some "histogram" mode? It may be nice to animate changes between these chart types!
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-?? Avoid subpixel positioning of bars (creates rendering problems - use exact pixel height) ??
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
 
-- Calculate a skewness value for the generated data
-  - To log/use with the user study.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
 
-Long-list:
-  - No mirroring (option)
-  - Two-column layout for negative values (negative on left side)
+* Neither the name of the University of Maryland nor the names of its contributors
+  may not be used to endorse or promote products derived from this software
+  without specific prior written permission.
 
-Runtime animation speed 
-- Use translate / scale instead of left/right/top/down/width...
-  -> faster animation
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL MICHAEL BOSTOCK BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-*/
+************************************ */
 
 // tipsy, facebook style tooltips for jquery
-// Modified / simplified version for internal Keshif use
+// Modified / simplified version for internal use
 // version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
 // released under the MIT license
@@ -40,108 +44,108 @@ function Tipsy(element, options) {
     this.options = $.extend({}, this.defaults, options);
 };
 Tipsy.prototype = {
-    defaults: {
-        className: null,
-        delayOut: 0,
-        fade: true,
-        fallback: '',
-        gravity: 'n',
-        offset: 0,
-        offset_x: 0,
-        offset_y: 0,
-        opacity: 1
-    },
-    show: function() {
-        var maybeCall = function(thing, ctx) {
-            return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
-        };
-        if(activeTipsy) {
-            activeTipsy.hide();
-        }
+  defaults: {
+    className: null,
+    delayOut: 0,
+    fade: true,
+    fallback: '',
+    gravity: 'n',
+    offset: 0,
+    offset_x: 0,
+    offset_y: 0,
+    opacity: 1
+  },
+  show: function() {
+    var maybeCall = function(thing, ctx) {
+      return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
+    };
+    if(activeTipsy) {
+      activeTipsy.hide();
+    }
 
-        activeTipsy=this;
+    activeTipsy=this;
 
-        var title = this.getTitle();
-        if(!title) return;
-        var jq_tip = this.tip();
-        
-        jq_tip.find('.tipsy-inner')['html'](title);
-        jq_tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
-        jq_tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
-        
-        var pos = $.extend({}, this.jq_element.offset(), {
-            width: this.jq_element[0].offsetWidth,
-            height: this.jq_element[0].offsetHeight
-        });
-        
-        var actualWidth = jq_tip[0].offsetWidth,
-            actualHeight = jq_tip[0].offsetHeight,
-            gravity = maybeCall(this.options.gravity, this.jq_element[0]);
-        
-        var tp;
-        switch (gravity.charAt(0)) {
-            case 'n':
-                tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
-                break;
-            case 's':
-                tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
-                break;
-            case 'e':
-                tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
-                break;
-            case 'w':
-                tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
-                break;
-        }
-        tp.top+=this.options.offset_y;
-        tp.left+=this.options.offset_x;
-        
-        if (gravity.length == 2) {
-            if (gravity.charAt(1) == 'w') {
-                tp.left = pos.left + pos.width / 2 - 15;
-            } else {
-                tp.left = pos.left + pos.width / 2 - actualWidth + 15;
-            }
-        }
-        
-        jq_tip.css(tp).addClass('tipsy-' + gravity);
-        jq_tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
-        if (this.options.className) {
-            jq_tip.addClass(maybeCall(this.options.className, this.jq_element[0]));
-        }
-        
-        if (this.options.fade) {
-            jq_tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity},200);
-        } else {
-            jq_tip.css({visibility: 'visible', opacity: this.options.opacity});
-        }
-    },
-    hide: function(){
-        activeTipsy = undefined;
-        if (this.options.fade) {
-            this.tip().stop().fadeOut(200,function() { $(this).remove(); });
-        } else {
-            this.tip().remove();
-        }
-    },
-    getTitle: function() {
-        var title, jq_e = this.jq_element, o = this.options;
-        var title, o = this.options;
-        if (typeof o.title == 'string') {
-            title = jq_e.attr(o.title == 'title' ? 'original-title' : o.title);
-        } else if (typeof o.title == 'function') {
-            title = o.title.call(jq_e[0]);
-        }
-        title = ('' + title).replace(/(^\s*|\s*$)/, "");
-        return title || o.fallback;
-    },
-    tip: function() {
-        if(this.jq_tip) return this.jq_tip;
-        this.jq_tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
-        this.jq_tip;
-        this.jq_tip.data('tipsy-pointee', this.jq_element[0]);
-        return this.jq_tip;
-    },
+    var title = this.getTitle();
+    if(!title) return;
+    var jq_tip = this.tip();
+    
+    jq_tip.find('.tipsy-inner')['html'](title);
+    jq_tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
+    jq_tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+    
+    var pos = $.extend({}, this.jq_element.offset(), {
+      width: this.jq_element[0].offsetWidth,
+      height: this.jq_element[0].offsetHeight
+    });
+    
+    var actualWidth = jq_tip[0].offsetWidth,
+        actualHeight = jq_tip[0].offsetHeight,
+        gravity = maybeCall(this.options.gravity, this.jq_element[0]);
+    
+    var tp;
+    switch (gravity.charAt(0)) {
+      case 'n':
+        tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+        break;
+      case 's':
+        tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+        break;
+      case 'e':
+        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
+        break;
+      case 'w':
+        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
+        break;
+    }
+    tp.top+=this.options.offset_y;
+    tp.left+=this.options.offset_x;
+    
+    if (gravity.length == 2) {
+      if (gravity.charAt(1) == 'w') {
+        tp.left = pos.left + pos.width / 2 - 15;
+      } else {
+        tp.left = pos.left + pos.width / 2 - actualWidth + 15;
+      }
+    }
+    
+    jq_tip.css(tp).addClass('tipsy-' + gravity);
+    jq_tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
+    if (this.options.className) {
+      jq_tip.addClass(maybeCall(this.options.className, this.jq_element[0]));
+    }
+    
+    if (this.options.fade) {
+      jq_tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity},200);
+    } else {
+      jq_tip.css({visibility: 'visible', opacity: this.options.opacity});
+    }
+  },
+  hide: function(){
+    activeTipsy = undefined;
+    if (this.options.fade) {
+      this.tip().stop().fadeOut(200,function() { $(this).remove(); });
+    } else {
+      this.tip().remove();
+    }
+  },
+  getTitle: function() {
+    var title, jq_e = this.jq_element, o = this.options;
+    var title, o = this.options;
+    if (typeof o.title == 'string') {
+      title = jq_e.attr(o.title == 'title' ? 'original-title' : o.title);
+    } else if (typeof o.title == 'function') {
+      title = o.title.call(jq_e[0]);
+    }
+    title = ('' + title).replace(/(^\s*|\s*$)/, "");
+    return title || o.fallback;
+  },
+  tip: function() {
+    if(this.jq_tip) return this.jq_tip;
+    this.jq_tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+    this.jq_tip;
+    this.jq_tip.data('tipsy-pointee', this.jq_element[0]);
+    return this.jq_tip;
+  },
 };
 
 function Chubuk(config){
@@ -174,7 +178,7 @@ function Chubuk(config){
   this.barScale = d3.scale.linear();
 
   this.color_1 = d3.rgb(146, 197, 226);
-  this.color_2 = d3.rgb(243, 145, 107);
+  this.color_2 = d3.rgb(239, 138, 98); // d3.rgb(255, 178, 136); // 181 132 / 153 113
 
   this.init();
 };
@@ -488,7 +492,9 @@ Chubuk.prototype = {
     this.DOM.records.append("div").attr("class","dot_tip")
       .each(function(d){
         // record tooltip is positioned at the dot_tip location
-        d.tipsy = new Tipsy(this, { gravity: 'se', title: function(){ return d.Label+": "+d.Value.toFixed(2);} });
+        d.tipsy = new Tipsy(this, { gravity: 'se', title: function(){ 
+          return "<u>"+d.Label+"</u><br> "+d.Value.toFixed(2);
+        } });
       });
 
     this.DOM.labels = this.DOM.records.append("div").attr("class","label")
@@ -538,8 +544,7 @@ Chubuk.prototype = {
 
   /** -- */
   refreshViz: function(){
-    if(this.theData.length===0) return;
-    this["refreshViz_"+this.chart_type]();
+    if(this.theData.length>0) this["refreshViz_"+this.chart_type]();
   },
 
   /** -- */
@@ -726,28 +731,22 @@ Chubuk.prototype = {
             d.bandRatio = 1 - d._colOrder / (me.largestBandNo);
           }
         } else {
-          if(me.largestBandNo<-1){
+          if(me.smallestBandNo<-1){
             d.bandRatio = 1 - (d._colOrder+1) / (me.smallestBandNo+1);
           }
         }
       })
       .style("height",(this.row_height-this.bar_padding)+"px")
-      .style("width",function(d){ return Math.abs(me.barScale(d.Value)-zeroPt)+"px"; })
-      .style("left",function(d){
-        if(d.Value>=0) return zeroPt+"px";
-        return me.barScale(d.Value)+"px";
-      })
-      .style("top",function(d){ return (d._rowOrder*me.row_height)+"px" })
-      .style("z-index",function(d){ return me.largestBandNo+5-Math.abs(d._colOrder); })
-      ;
+      .style("width",  function(d){ return Math.abs(me.barScale(d.Value)-zeroPt)+"px"; })
+      .style("left",   function(d){ return ( (d.Value>=0) ? zeroPt : me.barScale(d.Value) ) +"px"; })
+      .style("top",    function(d){ return (d._rowOrder*me.row_height)+"px" })
+      .style("z-index",function(d){ return me.largestBandNo+5-Math.abs(d._colOrder); });
 
     dataDOM_blocks
       .each(function(d){
-        var color = me.color_1.brighter(0.2);
-        color = color.darker( 0.5 * d.bandRatio );
+        var color = me.color_1.brighter(0.4).darker( 0.3 * d.bandRatio );
         if(d.Value<0 && me.showColor){
-          color = me.color_2.brighter(0.2);
-          color = color.darker( 0.5 * d.bandRatio );
+          color = me.color_2.brighter(0.5).darker( 0.3 * d.bandRatio );
         }
         // color = colorInterp(d.bandRatio,d.Value>=0);
         // color = me.color_1;
@@ -764,7 +763,7 @@ Chubuk.prototype = {
         if(d._colOrder<-1){ // Negative columns, not the last one.
           gradientPos = Math.abs(me.barScale(me.bandInfo[d._colOrder+1].min)-zeroPt);
           var nextBand_record = me.bandInfo[d._colOrder+1].records[d._rowOrder];
-          if(prevBand_record!==undefined){
+          if(nextBand_record!==undefined){
             gradientPos_2 = Math.abs(me.barScale(nextBand_record.Value)-zeroPt);
           }
         }
@@ -784,24 +783,50 @@ Chubuk.prototype = {
 
     this.DOM.labels
       .style("max-width",function(d){
-        if(d._colOrder===0) return "100%";
+        if(d._colOrder===0 || d._colOrder===-1) return "100%";
         if(d._colOrder>=0){
           var prevBand_record = me.bandInfo[d._colOrder-1].records[d._rowOrder];
           if(prevBand_record)
             return (me.barScale(d.Value)-me.barScale(prevBand_record.Value)-2)+"px";
-          else
-            return me.barScale(d.Value);
         }
         if(d._colOrder<0){
-          var prevBand_record = me.bandInfo[d._colOrder+1].records[d._rowOrder];
-          if(prevBand_record)
-            return (me.barScale(d.Value)-me.barScale(prevBand_record.Value)-2)+"px";
-          else
-            return me.barScale(d.Value);
+          var nextBand_record = me.bandInfo[d._colOrder+1].records[d._rowOrder];
+          if(nextBand_record)
+            return Math.abs(me.barScale(d.Value)-me.barScale(nextBand_record.Value)-2)+"px";
         }
-        return "";
+        return "100%";
       });
 
     this.refreshScale();
   }
 };
+
+/*
+// TODO
+
+Vary the luminance across columns - May make it easier to perceive the column structure. 
+  We cannot use color for another varible, so, just use it the best way you can.
+
+Stephen Few:
+- when the scale is small, such as in the rightmost column of bars, 
+   it is helpful to add minor tick marks or grid lines to support more precise comparisons of short bars. 
+(re: what if column skip happens when adjacent blocks have a wider gap, made invisible by switch of column)
+- Intelligence could be incorporated into the algorithm that determines the break points, 
+  but even that might not be worth the effort to correct such a rare problem. 
+
+- Maybe have some "histogram" mode? It may be nice to animate changes between these chart types!
+
+?? Avoid subpixel positioning of bars (creates rendering problems - use exact pixel height) ??
+
+- Calculate a skewness value for the generated data
+  - To log/use with the user study.
+
+Long-list:
+  - No mirroring (option)
+  - Two-column layout for negative values (negative on left side)
+
+Runtime animation speed 
+- Use translate / scale instead of left/right/top/down/width...
+  -> faster animation
+
+*/
