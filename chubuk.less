@@ -208,17 +208,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       height: 100%;
       .transition(~"all 250ms ease-in-out");
     }
-    > .dot_tip{
+    > .block_tip{
       display: block;
       position: absolute;
       width: 10px;
       height: 10px;
       right: -5px;
-      border-radius: 10px;
-      border: solid 1px white;
-      background-color: green;
       opacity: 0;
-      box-shadow: 0px 0px 1px white;
       top: calc(~"50% - 5px");
       .transition(~"all 200ms ease-in-out");
       z-index: 100;
@@ -351,7 +347,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         border-style: solid;
         border-width: 1px 0px; // top and bottom borders
       }
-      > .dot_tip{
+      > .block_tip{
         height: calc(~'100% - 4px');
         top: 2px;
         right: 0px;
@@ -367,7 +363,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           left: auto;
           right: 0%;
         }
-        > .dot_tip{
+        > .block_tip{
           box-shadow: 3px 0px 4px -0px rgba(0,0,0,0.6);
         }
       }
@@ -375,7 +371,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         //box-shadow: -4px 0px 5px -0px white;
         //box-shadow: -3px 0px 6px -0px rgba(0,0,0,0.4);
         border-right: 0px;
-        .dot_tip{
+        .block_tip{
           box-shadow: -3px 0px 4px -0px rgba(0,0,0,0.6);
           left: 0px;
           right: auto;
@@ -398,7 +394,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           padding-top: 2px;
           text-align: right;
         }
-        > .dot_tip{
+        > .block_tip{
           left: -7px;
           right: auto;
         }
@@ -409,17 +405,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       &.columnGap{ display: inline-block; }
     }
   } // [chart_type="wrapped_bars"]
-
-  &[showTip="true"]:not([chart_type="treemap"]){
-    .dot_tip{ opacity: 1; }
-    .button_showTip > .fa:before{ content: "\f06e"; }
-  }
-  &[showTip="false"]{
-    .button_showTip{
-      color: gray;
-      > .fa:before{ content: "\f070"; }
-    }
-  }
 
   &[showLabel="true"]{
     .label{ display: block; }

@@ -279,17 +279,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -o-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;
 }
-.Chubuk .record > .dot_tip {
+.Chubuk .record > .block_tip {
   display: block;
   position: absolute;
   width: 10px;
   height: 10px;
   right: -5px;
-  border-radius: 10px;
-  border: solid 1px white;
-  background-color: green;
   opacity: 0;
-  box-shadow: 0px 0px 1px white;
   top: calc(50% - 5px);
   -webkit-transition: all 200ms ease-in-out;
   -moz-transition: all 200ms ease-in-out;
@@ -451,7 +447,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   border-style: solid;
   border-width: 1px 0px;
 }
-.Chubuk[chart_type="piled_bars"] .record > .dot_tip {
+.Chubuk[chart_type="piled_bars"] .record > .block_tip {
   height: calc(100% - 4px);
   top: 2px;
   right: 0px;
@@ -464,13 +460,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   left: auto;
   right: 0%;
 }
-.Chubuk[chart_type="piled_bars"] .record[isNegative="false"] > .dot_tip {
+.Chubuk[chart_type="piled_bars"] .record[isNegative="false"] > .block_tip {
   box-shadow: 3px 0px 4px 0px rgba(0, 0, 0, 0.6);
 }
 .Chubuk[chart_type="piled_bars"] .record[isNegative="true"] {
   border-right: 0px;
 }
-.Chubuk[chart_type="piled_bars"] .record[isNegative="true"] .dot_tip {
+.Chubuk[chart_type="piled_bars"] .record[isNegative="true"] .block_tip {
   box-shadow: -3px 0px 4px 0px rgba(0, 0, 0, 0.6);
   left: 0px;
   right: auto;
@@ -493,7 +489,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   padding-top: 2px;
   text-align: right;
 }
-.Chubuk[chart_type="wrapped_bars"] .record[isNegative="true"] > .dot_tip {
+.Chubuk[chart_type="wrapped_bars"] .record[isNegative="true"] > .block_tip {
   left: -7px;
   right: auto;
 }
@@ -502,18 +498,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 .Chubuk[chart_type="wrapped_bars"] > .configPanel > .configGroup > .configOpt.columnGap {
   display: inline-block;
-}
-.Chubuk[showTip="true"]:not([chart_type="treemap"]) .dot_tip {
-  opacity: 1;
-}
-.Chubuk[showTip="true"]:not([chart_type="treemap"]) .button_showTip > .fa:before {
-  content: "\f06e";
-}
-.Chubuk[showTip="false"] .button_showTip {
-  color: gray;
-}
-.Chubuk[showTip="false"] .button_showTip > .fa:before {
-  content: "\f070";
 }
 .Chubuk[showLabel="true"] .label {
   display: block;

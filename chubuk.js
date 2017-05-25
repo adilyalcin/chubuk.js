@@ -171,7 +171,6 @@ function Chubuk(config){
   this.showLabel = config.showLabel || false;
   this.showGridLines = config.showGridLines || true;
   // Not actively used, just keeping it for the future / experimentation...
-  this.showTip = config.showTip || false;
 
   this.theData = [];
 
@@ -191,7 +190,7 @@ Chubuk.prototype = {
     this.DOM.root = d3.select(this.DOM.target);
 
     // attach settings to DOM
-    ["chart_type", "showTip", "showLabel", "showTooltip", "showColor",
+    ["chart_type", "showLabel", "showTooltip", "showColor",
      "showGridLines", "showGradient", "wrappedInverse", "datanegative"
     ].forEach(function(v){ 
       me.DOM.root.attr(v,me[v]); 
@@ -223,7 +222,6 @@ Chubuk.prototype = {
     x = this.DOM.configGroup_Display.selectAll(".configOpt").data([
         { id:"button_showTooltip", name:"Tooltip"},
         { id:"button_showLabel", name:"Label"},
-        { id:"button_showTip", name:"Tip"},
         { id:"button_showGridLines", name:"Axis"},
         { id:"button_showColor", name:"&lt;0 Color"},
         { id:"button_wrappedInverse", name:"Switch Col"},
@@ -489,9 +487,9 @@ Chubuk.prototype = {
         }
       });
 
-    this.DOM.records.append("div").attr("class","dot_tip")
+    this.DOM.records.append("div").attr("class","block_tip")
       .each(function(d){
-        // record tooltip is positioned at the dot_tip location
+        // record tooltip is positioned at the block_tip location
         d.tipsy = new Tipsy(this, { gravity: 'se', title: function(){ 
           return "<u>"+d.Label+"</u><br> "+d.Value.toFixed(2);
         } });
