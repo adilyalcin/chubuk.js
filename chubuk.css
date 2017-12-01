@@ -472,6 +472,73 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   left: 0px;
   right: auto;
 }
+.Chubuk[chart_type="zvinca_plot"] .vizType.zvinca_plot {
+  background-color: #D6DED3;
+  color: black;
+  box-shadow: 1px 1px 1px black;
+  font-weight: 400;
+}
+.Chubuk[chart_type="zvinca_plot"] .record > .block {
+  background-color: transparent !important;
+}
+.Chubuk[chart_type="zvinca_plot"] .record > .block_tip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  opacity: 1;
+}
+.Chubuk[chart_type="zvinca_plot"] .record[isNegative="false"] > .label {
+  text-align: right;
+  left: auto;
+  right: 0%;
+  padding-right: 5px;
+}
+.Chubuk[chart_type="zvinca_plot"] .record[isNegative="false"] > .block_tip {
+  background-color: #7DA7C7;
+}
+.Chubuk[chart_type="zvinca_plot"] .record[isNegative="true"] {
+  border-right: 0px;
+}
+.Chubuk[chart_type="zvinca_plot"] .record[isNegative="true"] > .label {
+  padding-left: 9px;
+}
+.Chubuk[chart_type="zvinca_plot"] .record[isNegative="true"] .block_tip {
+  background-color: #ef8a62;
+  left: 0px;
+  right: auto;
+}
+.Chubuk[chart_type="packed_bars"] .vizType.packed_bars {
+  background-color: #D6DED3;
+  color: black;
+  box-shadow: 1px 1px 1px black;
+  font-weight: 400;
+}
+.Chubuk[chart_type="packed_bars"] .record > .block {
+  background-color: #9cc4df;
+  border-right: 1px;
+  border-color: #fff;
+  border-right-style: solid;
+}
+.Chubuk[chart_type="packed_bars"] .record > .block_tip {
+  background-color: #9cc4df;
+  height: calc(100% - 4px);
+  top: 2px;
+  right: 0px;
+  opacity: 0;
+}
+.Chubuk[chart_type="packed_bars"] .record[isNegative="false"] > .label {
+  text-align: right;
+  left: auto;
+  right: 0%;
+}
+.Chubuk[chart_type="packed_bars"] .record[isNegative="true"] {
+  border-right: 0px;
+}
+.Chubuk[chart_type="packed_bars"] .record[isNegative="true"] .block_tip {
+  background-color: #ef8a62;
+  left: 0px;
+  right: auto;
+}
 .Chubuk[chart_type="wrapped_bars"] .vizType.wrapped_bars {
   background-color: #D6DED3;
   color: black;

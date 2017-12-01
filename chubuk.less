@@ -379,6 +379,114 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       }
     }
   } // &[chart_type="piled_bars"]
+    
+    
+   &[chart_type="zvinca_plot"]{
+    .vizType.zvinca_plot{ .selectedVizType() }
+    .record{
+      > .block{
+        //top: 0px;
+        //border-style: solid;
+        //border-width: 1px 0px; // top and bottom borders
+        //background-image:null !important; 
+         background-color: transparent !important;
+      }
+      > .block_tip{
+     ////   height: calc(~'100% - 4px');
+     ////   top: 2px;
+     ////   right: 0px;
+       // width: 5px;
+        width: 7px;
+	    height: 7px;
+        border-radius: 50%;
+        //background-color: #257e9a;
+        opacity: 1;
+        //z-index: -1;
+      }
+      &[isNegative="false"]{
+        //box-shadow: 4px 0px 5px -0px white;
+        //box-shadow: 3px 0px 6px -0px rgba(0,0,0,0.4);
+        > .label{
+          text-align: right;
+          left: auto;
+          right: 0%;
+          padding-right: 5px;
+        }
+        > .block_tip{
+          background-color: #7DA7C7;
+          //box-shadow: 3px 0px 4px -0px rgba(0,0,0,0.6);
+        }
+      }
+      &[isNegative="true"]{
+        //box-shadow: -4px 0px 5px -0px white;
+        //box-shadow: -3px 0px 6px -0px rgba(0,0,0,0.4);
+        border-right: 0px;
+        > .label{
+          //text-align: right;
+          //left: auto;
+          padding-left: 9px;
+          //right: 0%;
+        }
+        .block_tip{
+          background-color: #ef8a62;
+          //box-shadow: -3px 0px 4px -0px rgba(0,0,0,0.6);
+          left: 0px;
+          right: auto;
+        }
+      }
+    }
+  } // &[chart_type="zvinca_plot"]
+    
+    
+&[chart_type="packed_bars"]{
+    .vizType.packed_bars{ .selectedVizType() }
+    .record{
+      > .block{
+        background-color:#9cc4df;
+        border-right:1px;
+        border-color:#fff;
+        border-right-style: solid;
+      }
+      > .block_tip{
+        //display:none;
+        background-color:#9cc4df;
+        height: calc(~'100% - 4px');
+        top: 2px;
+        right: 0px;
+       // width: 5px;
+      ////  width: 7px;
+	  ////  height: 7px;
+       //// border-radius: 50%;
+        //background-color: #257e9a;
+        opacity: 0;
+        //z-index: -1;
+      }
+      &[isNegative="false"]{
+        //box-shadow: 4px 0px 5px -0px white;
+        //box-shadow: 3px 0px 6px -0px rgba(0,0,0,0.4);
+        > .label{
+          text-align: right;
+          left: auto;
+          right: 0%;
+        }
+        > .block_tip{
+          //background-color: #7DA7C7;
+          //box-shadow: 3px 0px 4px -0px rgba(0,0,0,0.6);
+        }
+      }
+      &[isNegative="true"]{
+        //box-shadow: -4px 0px 5px -0px white;
+        //box-shadow: -3px 0px 6px -0px rgba(0,0,0,0.4);
+        border-right: 0px;
+        .block_tip{
+          background-color: #ef8a62;
+          //box-shadow: -3px 0px 4px -0px rgba(0,0,0,0.6);
+          left: 0px;
+          right: auto;
+        }
+      }
+    }
+  } // &[chart_type="packed_bars"]
 
   &[chart_type="wrapped_bars"]{
     .vizType.wrapped_bars{ .selectedVizType() }
