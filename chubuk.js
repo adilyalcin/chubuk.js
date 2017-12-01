@@ -206,7 +206,9 @@ Chubuk.prototype = {
         {_class:"long_list", name:"Long List"},
         {_class:"treemap", name:"Treemap"},
         {_class:"wrapped_bars", name:"Wrapped Bars"},
-        {_class:"piled_bars", name:"Piled Bars"}
+        {_class:"piled_bars", name:"Piled Bars"},
+        {_class:"zvinca_plot", name:"Zvinca Plot"},
+        {_class:"packed_bars", name:"Packed Bars"}
       ]).enter().append("div")
         .attr("class",function(d){ return "vizType "+d._class; })
         .html(function(d){ return d.name})
@@ -365,6 +367,19 @@ Chubuk.prototype = {
       this.firstNegativeIndex = i;
       return true;
     },this);
+  },
+    
+    sortData_decr_abs: function(force){
+    if(this.sorted_decr===true && force==undefined) return;
+    this.theData = this.theData.sort(function(a,b){return Math.abs(b.Value)-Math.abs(a.Value);});
+    this.sorted_decr = true;
+    // Update firstNegativeIndex
+//    this.firstNegativeIndex = this.theData.length;
+//    this.theData.some(function(d,i){
+////      if(d.Value>=0) return false;
+//      this.firstNegativeIndex = i;
+//      return true;
+//    },this);
   },
 
   /** -- Figures out what the optimal number of columns would be, and applies that */
@@ -568,6 +583,7 @@ Chubuk.prototype = {
       .style("background-color",null)
       .style("border-color",null);
     this.DOM.labels
+      .style("display","block")
       .style("max-width",null)
       .style("left",null)
       .style("right",null);
@@ -603,6 +619,7 @@ Chubuk.prototype = {
       .style("background-color",null)
       .style("border-color",null);
     this.DOM.labels
+      .style("display","block")
       .style("max-width","100%")
       .style("left",null)
       .style("right",null);
@@ -663,6 +680,7 @@ Chubuk.prototype = {
       .style("border-color",null);
 
     this.DOM.labels
+      .style("display","block")
       .style("max-width","100%")
       .style("left",null)
       .style("right",null);
@@ -697,7 +715,7 @@ Chubuk.prototype = {
       );
     }
   },
-  
+    
   /** -- */
   refreshViz_piled_bars: function(){
     var me=this;
@@ -780,6 +798,7 @@ Chubuk.prototype = {
       });
 
     this.DOM.labels
+      .style("display","block")
       .style("max-width",function(d){
         if(d._colOrder===0 || d._colOrder===-1) return "100%";
         if(d._colOrder>=0){
@@ -796,8 +815,327 @@ Chubuk.prototype = {
       });
 
     this.refreshScale();
+  },
+    
+    /** -- */
+  refreshViz_zvinca_plot: function () {
+          var me = this;
+          this.sortData_decr();
+          this.barScale
+              .domain([
+                  (this.firstNegativeIndex === this.theData.length) ? 0 : (d3.min(this.theData, function (d) {
+                      return d.Value;
+                  })),
+        d3.max(this.theData, function (d) {
+                      return d.Value;
+                  })
+      ])
+              .range([0, this.chart_width]);
+
+          var zeroPt = this.barScale(0);
+
+          this.DOM.records
+              .each(function (d) {
+                  // d.band_Ratio is used to interpolate the color
+                  d.bandRatio = 0;
+                  if (d._colOrder >= 0) {
+                      if (me.largestBandNo > 0) {
+                          d.bandRatio = 1 - d._colOrder / (me.largestBandNo);
+                      }
+                  } else {
+                      if (me.smallestBandNo < -1) {
+                          d.bandRatio = 1 - (d._colOrder + 1) / (me.smallestBandNo + 1);
+                      }
+                  }
+              })
+
+              .style("height", (this.row_height - this.bar_padding) + "px")
+              .style("width", function (d) {
+                  return Math.abs(me.barScale(d.Value) - zeroPt) + "px";
+              })
+              .style("left", function (d) {
+                  return ((d.Value >= 0) ? zeroPt : me.barScale(d.Value)) + "px";
+              })
+              .style("top", function (d) {
+                  return (d._rowOrder * me.row_height) + "px"
+              })
+              .style("z-index", function (d) {
+                  return me.largestBandNo + 5 - Math.abs(d._colOrder);
+              });
+
+          dataDOM_blocks
+              .each(function (d) {
+                  var color = me.color_1.brighter(0.4).darker(0.3 * d.bandRatio);
+                  /* if(d.Value<0 && me.showColor){
+                     color = me.color_2.brighter(0.5).darker( 0.3 * d.bandRatio );
+                   }*/
+                  // color = colorInterp(d.bandRatio,d.Value>=0);
+                  // color = me.color_1;
+
+                  /*  var gradientPos=0;
+                    var gradientPos_2=0;
+                    if(d._colOrder>0){ // Positive columns, not the first one
+                      gradientPos = Math.abs(me.barScale(me.bandInfo[d._colOrder-1].max)-zeroPt);
+                      var prevBand_record = me.bandInfo[d._colOrder-1].records[d._rowOrder];
+                      if(prevBand_record!==undefined){
+                        gradientPos_2 = Math.abs(me.barScale(prevBand_record.Value)-zeroPt);
+                      }
+                    }*/
+                  if (d._colOrder < -1) { // Negative columns, not the last one.
+                      gradientPos = Math.abs(me.barScale(me.bandInfo[d._colOrder + 1].min) - zeroPt);
+                      var nextBand_record = me.bandInfo[d._colOrder + 1].records[d._rowOrder];
+                      if (nextBand_record !== undefined) {
+                          gradientPos_2 = Math.abs(me.barScale(nextBand_record.Value) - zeroPt);
+                      }
+                  }
+
+                  //  d._gradientPos = gradientPos;
+                  // d._gradientPos_2 = gradientPos_2;
+
+                  // this.style.borderColor = color;
+
+                  var color_d3 = d3.rgb(color);
+                  /* this.style.backgroundImage = "linear-gradient(to "+((d.Value>=0)?"right":"left")+", "+
+                       "rgba(255,255,255,0) "+Math.max(0,gradientPos_2-2)+"px, "+
+                       "rgba(255,255,255,1) "+(gradientPos_2+1)+"px, "+
+                       "rgba("+color_d3.r+","+color_d3.g+","+color_d3.b+","+"1) "+gradientPos+"px)"
+                       ;*/
+                  this.style.backgroundImage = null;
+              });
+          /*   this.DOM.labels
+             .style("display","none"); */
+
+          this.DOM.labels
+              .style("max-width", function (d) {
+                  if (d._colOrder === 0 || d._colOrder === -1) return "100%";
+                  if (d._colOrder >= 0) {
+                      var prevBand_record = me.bandInfo[d._colOrder - 1].records[d._rowOrder];
+                      if (prevBand_record)
+                          return (me.barScale(d.Value) - me.barScale(prevBand_record.Value) - 2) + "px";
+                  }
+                  if (d._colOrder < 0) {
+                      var nextBand_record = me.bandInfo[d._colOrder + 1].records[d._rowOrder];
+                      if (nextBand_record)
+                          return Math.abs(me.barScale(d.Value) - me.barScale(nextBand_record.Value) - 2) + "px";
+                  }
+                  return "100%";
+              });
+
+          this.refreshScale();
+      },
+
+      /** -- */
+
+
+
+  refreshViz_packed_bars: function () {
+      /* var me = this;
+
+       this.sortData_decr();
+
+       this.barScale
+         .domain([
+           (this.firstNegativeIndex===this.theData.length) ? 0 : (d3.min(this.theData,function(d){ return d.Value;})) ,
+           d3.max(this.theData,function(d){ return d.Value;})
+         ])
+         .range([0,this.chart_width]);
+
+       var zeroPt = this.barScale(0);
+
+       this.DOM.records
+         .each(function(d){
+           // d.band_Ratio is used to interpolate the color
+           d.bandRatio = 0;
+           if(d._colOrder>=0){
+             if(me.largestBandNo>0){
+               d.bandRatio = 1 - d._colOrder / (me.largestBandNo);
+             }
+           } else {
+             if(me.smallestBandNo<-1){
+               d.bandRatio = 1 - (d._colOrder+1) / (me.smallestBandNo+1);
+             }
+           }
+         })
+         .style("height",(this.row_height-this.bar_padding)+"px")
+         .style("width",  function(d){ return Math.abs(me.barScale(d.Value)-zeroPt)+"px"; })
+         .style("left",   function(d){ return ( (d.Value>=0) ? zeroPt : me.barScale(d.Value) ) +"px"; })
+         .style("top",    function(d){ return (d._rowOrder*me.row_height)+"px" })
+         .style("z-index",function(d){ return me.largestBandNo+5-Math.abs(d._colOrder); });
+         
+       this.refreshScale();*/
+
+      var me = this;
+      //this.sortData_decr_abs();
+      var NegData = this.theData.filter(function(d){return d.Value<0;}).sort(function(left,right){
+          return Math.abs(right.Value)-Math.abs(left.Value);
+      });
+      var PosData = this.theData.filter(function(d){return d.Value>0;}).sort(function(left,right){
+          return Math.abs(right.Value)-Math.abs(left.Value);
+      });
+      
+      var n = 28;
+      var a = new Array(n);
+      var b = new Array(n);
+//      for (var i = 0; i < n; i++) {
+//          a[i] = Math.abs(this.theData[i].Value);
+//          this.theData[i].left = 0;
+//          this.theData[i].top = (1 + i * Math.ceil(me.row_height));
+//          this.theData[i].LabelDisplay = true;
+//      }
+
+//      for (var j = n; j < this.theData.length; j += n) {
+//
+//          var iA = sortWithIndeces(a.slice());
+//
+//          for (var k = 0; k < iA.length; k++) {
+//              if (j + k < this.theData.length) {
+//                  this.theData[j + k].LabelDisplay = true;
+//                  if ((j + k) >= n*2) {
+//                      this.theData[j + k].LabelDisplay = false;
+//                  }
+//                  this.theData[j + k].left = a[iA[k]];
+//                  this.theData[j + k].top = (1 + iA[k] * Math.ceil(me.row_height));
+//                  a[iA[k]] = a[iA[k]] + Math.abs(this.theData[j + k].Value);
+//              }
+//          }
+//
+//      }
+      
+      
+      // new code
+     this.row_height = this.bar_height_list;
+     for (var i = 0; i < n; i++) {
+          a[i] = 0;
+          b[i]=0;
+      }
+      
+      for (var i = 0; i < PosData.length; i++) {
+          
+          var iA = sortWithIndeces(a.slice());
+          
+          var indexOfA = iA[0];
+          
+          PosData[i].left = a[indexOfA];
+          PosData[i].top = indexOfA * me.row_height;
+          a[indexOfA] += Math.abs(PosData[i].Value); 
+          PosData[i].LabelDisplay = true;
+                 // if (i >= n*2) {
+                  //    PosData[i].LabelDisplay = false;
+                  //}
+      }
+      
+      for (var i = 0; i < NegData.length; i++) {
+          
+          var iB = sortWithIndeces(b.slice());
+          
+          var indexOfB = iB[0];
+          
+          NegData[i].right = b[indexOfB];
+          NegData[i].top = indexOfB * me.row_height;
+          b[indexOfB] += Math.abs(NegData[i].Value); 
+          NegData[i].LabelDisplay = true;
+                  //if (i >= n*2) {
+                   //   NegData[i].LabelDisplay = false;
+                  //}
+      }
+
+      this.theData = PosData.concat(NegData);
+
+      // for (var j = this.theData.le; j < n; j+=n) {
+      //      
+      //    var iA = sortWithIndeces(a.slice());
+      //        
+      //      for(var k = 0; k<iA.length; k++){
+      //          this.theData[j+iA[k]].left = a[iA[k]];
+      //          this.theData[j+iA[k]].top = (1+iA[k]*me.row_height);
+      //          a[iA[k]] = a[iA[k]]+ this.theData[j+iA[k]].Value;     
+      //      }
+      //  
+      //   }
+
+      var min = d3.min(b, function (d) {
+              return -d;
+          });
+      
+      var max = d3.max(a, function (d) {
+              return d;
+          });
+      
+      this.barScale
+          .domain([min, max])
+          .range([0, this.chart_width - ((this.row_height * this.theData.length <= this.chart_height) ? 0 : 20)]);
+
+      this.DOM.records
+          .style("width", function (d, i) {
+              return me.barScale(Math.abs(d.Value) + min) + "px";
+          })
+          .style("top", function (d, i) {
+              return (1+d.top) + "px";
+          })
+      /*    .style("left", function (d, i) {
+              if (d.Value > 0) {
+                  return (Math.ceil(i / n) + me.barScale(d.left)) + "px";
+              } else {
+                  return (Math.ceil((i - PosData.length) / n) + me.barScale(0) - me.barScale(d.right + min) 
+                                              - me.barScale(Math.abs(d.Value) + min)) + "px";
+              }
+              
+          })*/
+          .style("left", function (d, i) {
+              if (d.Value > 0) {
+                  return (me.barScale(d.left)) + "px";
+              } else {
+                  return (me.barScale(0) - me.barScale(d.right + min) 
+                                              - me.barScale(Math.abs(d.Value) + min)) + "px";
+              }
+              
+          })
+          .style("height", (this.row_height - this.bar_padding) + "px")
+          .style("z-index", 10);
+      dataDOM_blocks
+          .style("background-image", null)
+          .style("background-color", null)
+          .style("border-color", null);
+      this.DOM.labels
+          .style("display", function (d, i) {
+              return d.LabelDisplay ? "block" : "none";
+          })
+          .style("max-width", null)
+          .style("left", null)
+          .style("right", null);
+      this.refreshScale();
   }
-};
+  };
+
+
+  //descending sort
+  function sortWithIndeces(toSort) {
+      for (var i = 0; i < toSort.length; i++) {
+          toSort[i] = [toSort[i], i];
+      }
+      toSort.sort(function (left, right) {
+          if (left[0] < right[0]) {
+              return -1;
+          }
+          
+          if (left[0] > right[0]) {
+              return 1;
+          }
+          
+          return left[1] - right[1];
+      });
+      var sortIndices = [];
+      for (var j = 0; j < toSort.length; j++) {
+          sortIndices.push(toSort[j][1]);
+          toSort[j] = toSort[j][0];
+      }
+      return sortIndices;
+  }
+
+/** -- */
+
+
+  
 
 /*
 // TODO
