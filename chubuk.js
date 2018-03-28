@@ -82,6 +82,7 @@ Tipsy.prototype = {
         actualHeight = jq_tip[0].offsetHeight,
         gravity = maybeCall(this.options.gravity, this.jq_element[0]);
     
+    
     var tp;
     switch (gravity.charAt(0)) {
       case 'n':
@@ -469,6 +470,7 @@ Chubuk.prototype = {
       .enter().append("div").attr("class","record")
         .attr("title",function(d){ if(d.Label) return d.Label; })
         .attr("isNegative", function(d){ return (d.Value<0); })
+        //.attr("recNumber", function(d){ return d.Value; })
         .attr("highlight", function(d){  return d.highlighted; })
         .on("mouseenter", function(d){ if(me.showTooltip) d.tipsy.show(); })
         .on("mouseleave", function(d){ d.tipsy.hide(); })
@@ -929,41 +931,7 @@ Chubuk.prototype = {
 
 
   refreshViz_packed_bars: function () {
-      /* var me = this;
-
-       this.sortData_decr();
-
-       this.barScale
-         .domain([
-           (this.firstNegativeIndex===this.theData.length) ? 0 : (d3.min(this.theData,function(d){ return d.Value;})) ,
-           d3.max(this.theData,function(d){ return d.Value;})
-         ])
-         .range([0,this.chart_width]);
-
-       var zeroPt = this.barScale(0);
-
-       this.DOM.records
-         .each(function(d){
-           // d.band_Ratio is used to interpolate the color
-           d.bandRatio = 0;
-           if(d._colOrder>=0){
-             if(me.largestBandNo>0){
-               d.bandRatio = 1 - d._colOrder / (me.largestBandNo);
-             }
-           } else {
-             if(me.smallestBandNo<-1){
-               d.bandRatio = 1 - (d._colOrder+1) / (me.smallestBandNo+1);
-             }
-           }
-         })
-         .style("height",(this.row_height-this.bar_padding)+"px")
-         .style("width",  function(d){ return Math.abs(me.barScale(d.Value)-zeroPt)+"px"; })
-         .style("left",   function(d){ return ( (d.Value>=0) ? zeroPt : me.barScale(d.Value) ) +"px"; })
-         .style("top",    function(d){ return (d._rowOrder*me.row_height)+"px" })
-         .style("z-index",function(d){ return me.largestBandNo+5-Math.abs(d._colOrder); });
-         
-       this.refreshScale();*/
-
+     
       var me = this;
       //this.sortData_decr_abs();
       var NegData = this.theData.filter(function(d){return d.Value<0;}).sort(function(left,right){
@@ -973,36 +941,10 @@ Chubuk.prototype = {
           return Math.abs(right.Value)-Math.abs(left.Value);
       });
       
-      var n = 28;
+       var n = 28;
       var a = new Array(n);
       var b = new Array(n);
-//      for (var i = 0; i < n; i++) {
-//          a[i] = Math.abs(this.theData[i].Value);
-//          this.theData[i].left = 0;
-//          this.theData[i].top = (1 + i * Math.ceil(me.row_height));
-//          this.theData[i].LabelDisplay = true;
-//      }
 
-//      for (var j = n; j < this.theData.length; j += n) {
-//
-//          var iA = sortWithIndeces(a.slice());
-//
-//          for (var k = 0; k < iA.length; k++) {
-//              if (j + k < this.theData.length) {
-//                  this.theData[j + k].LabelDisplay = true;
-//                  if ((j + k) >= n*2) {
-//                      this.theData[j + k].LabelDisplay = false;
-//                  }
-//                  this.theData[j + k].left = a[iA[k]];
-//                  this.theData[j + k].top = (1 + iA[k] * Math.ceil(me.row_height));
-//                  a[iA[k]] = a[iA[k]] + Math.abs(this.theData[j + k].Value);
-//              }
-//          }
-//
-//      }
-      
-      
-      // new code
      this.row_height = this.bar_height_list;
      for (var i = 0; i < n; i++) {
           a[i] = 0;
@@ -1041,18 +983,7 @@ Chubuk.prototype = {
 
       this.theData = PosData.concat(NegData);
 
-      // for (var j = this.theData.le; j < n; j+=n) {
-      //      
-      //    var iA = sortWithIndeces(a.slice());
-      //        
-      //      for(var k = 0; k<iA.length; k++){
-      //          this.theData[j+iA[k]].left = a[iA[k]];
-      //          this.theData[j+iA[k]].top = (1+iA[k]*me.row_height);
-      //          a[iA[k]] = a[iA[k]]+ this.theData[j+iA[k]].Value;     
-      //      }
-      //  
-      //   }
-
+  
       var min = d3.min(b, function (d) {
               return -d;
           });
