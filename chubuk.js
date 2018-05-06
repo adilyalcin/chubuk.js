@@ -639,7 +639,8 @@ Chubuk.prototype = {
       .style("display","block")
       .style("max-width","100%")
       .style("left",null)
-      .style("right",null);
+      .style("right",null)
+      ;
   },
 
   /** -- */
@@ -977,7 +978,7 @@ Chubuk.prototype = {
           a[indexOfA] += Math.abs(PosData[i].Value); 
           PosData[i].LabelDisplay = true;
           // Labelling 80% of data
-          if (i > 0.2 * PosData.length) {
+          if (PosData[i].Value < 0.8 * PosData[27].Value) {
               PosData[i].LabelDisplay = false;
           }
 //          if (i >= n) {
@@ -995,7 +996,7 @@ Chubuk.prototype = {
           NegData[i].top = indexOfB * me.row_height;
           b[indexOfB] += Math.abs(NegData[i].Value); 
           NegData[i].LabelDisplay = true;
-          if (i > 0.2 * NegData.length) {
+          if (NegData[i].Value < 1.2 * NegData[27].Value) {
               NegData[i].LabelDisplay = false;
           }
 //          if (i >= n) {
@@ -1069,7 +1070,17 @@ Chubuk.prototype = {
           })
           .style("max-width", null)
           .style("left", null)
-          .style("right", null);
+          .style("right", null)
+        .style("text-align", function (d) {
+          if (d.left != 0 && d.right != 0) {
+                return "center";
+            }
+          if (d.Value < 0) {
+              return "right";
+          }
+          return "left";
+        
+    });
       this.refreshScale();
   }
   };
