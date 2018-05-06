@@ -478,7 +478,7 @@ Chubuk.prototype = {
         ;
 
     dataDOM_blocks = this.DOM.records.append("div").attr("class","block")
-      .on("mouseover",function(d){
+      .on("mouseover",function(d, i){
         if(me.chart_type==="piled_bars"){
           d.oldBackground = this.style.backgroundImage;
           var dir="right";
@@ -491,16 +491,31 @@ Chubuk.prototype = {
           return;
         }
         if(d.Value<0 && me.showColor){
-          this.style.backgroundColor = "rgb(202, 66, 13)";
+            if (me.chart_type==="packed_bars" && (d.left != 0 && d.right != 0)) {
+
+            } else {
+                this.style.backgroundColor = "rgb(202, 66, 13)";    
+            }
         } else {
-          this.style.backgroundColor = "rgb(42, 129, 179)";
+          if (me.chart_type==="packed_bars" && (d.left != 0 && d.right != 0)) {
+
+            } else {
+                this.style.backgroundColor = "rgb(42, 129, 179)";    
+            }
+            
         }
       })
-      .on("mouseout",function(d){
+      .on("mouseout",function(d, i){
         if(me.chart_type==="piled_bars"){
           this.style.backgroundImage = d.oldBackground;
         } else {
           this.style.backgroundColor = null;
+            
+            if(me.chart_type==="packed_bars"){
+                if (d.left != 0 && d.right != 0) {
+                this.style.backgroundColor = "hsl("+0+", "+ 0 +"%, "+rand(80, 90) +"%)";
+                }  
+             }
         }
       });
 
@@ -961,9 +976,13 @@ Chubuk.prototype = {
           PosData[i].top = indexOfA * me.row_height;
           a[indexOfA] += Math.abs(PosData[i].Value); 
           PosData[i].LabelDisplay = true;
-                 // if (i >= n*2) {
-                  //    PosData[i].LabelDisplay = false;
-                  //}
+          // Labelling 80% of data
+          if (i > 0.2 * PosData.length) {
+              PosData[i].LabelDisplay = false;
+          }
+//          if (i >= n) {
+//              PosData[i].LabelDisplay = false;
+//          }
       }
       
       for (var i = 0; i < NegData.length; i++) {
@@ -976,9 +995,12 @@ Chubuk.prototype = {
           NegData[i].top = indexOfB * me.row_height;
           b[indexOfB] += Math.abs(NegData[i].Value); 
           NegData[i].LabelDisplay = true;
-                  //if (i >= n*2) {
-                   //   NegData[i].LabelDisplay = false;
-                  //}
+          if (i > 0.2 * NegData.length) {
+              NegData[i].LabelDisplay = false;
+          }
+//          if (i >= n) {
+//             NegData[i].LabelDisplay = false;
+//          }
       }
 
       this.theData = PosData.concat(NegData);
@@ -1026,6 +1048,20 @@ Chubuk.prototype = {
       dataDOM_blocks
           .style("background-image", null)
           .style("background-color", null)
+          //.style("border-color", null);
+         .style("background-color",function(d,i){
+          
+            if (d.left != 0 && d.right != 0) {
+                var hsl = "hsl("+0+", "+ 0 +"%, "+rand(80, 90) +"%)";
+                    return hsl;
+            }
+//             if(i>27){
+//                 for(i=28;i<me.theData.length;i++){
+//                    var hsl = "hsl("+0+", "+ 0 +"%, "+rand(80, 90) +"%)";
+//                    return hsl;
+//               } 
+//             }
+          })
           .style("border-color", null);
       this.DOM.labels
           .style("display", function (d, i) {
@@ -1064,7 +1100,9 @@ Chubuk.prototype = {
   }
 
 /** -- */
-
+function rand(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
   
 
