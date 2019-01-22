@@ -43,10 +43,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   // to reuse the style for different sections
   .selectedVizType{
-    background-color: #D6DED3;
     color: black;
     box-shadow: 1px 1px 1px black;
-    font-weight: 400;
+    font-weight: 600 !important;
   }
 
   > .configPanel{
@@ -58,16 +57,17 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     bottom: -80px;
     z-index: 200;
     width: 100%;
-    border-radius: 5px;
-    border: solid 1px lightgray;
     margin: 0px;
-    background-color: rgba(238, 238, 238, 0.5);
 
     &[active="false"]{
       border: solid 0px lightgray;
       margin: 1px;
       > .selectVizType{ display: none; }
-      > .configGroup{ display: none; }
+      .configGroup{ display: none; }
+    }
+
+    .chartOptions{
+      text-align: center;
     }
 
     > .configVisiblityButton{
@@ -80,36 +80,45 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     > .selectVizType{
       padding: 2px;
-      border-bottom: solid 1px lightgray;
       .display(flex);
       .flex-direction(row);
       > .selectVizType-Header{
         display: block;
         padding: 4px;
-        font-weight: 300;
+        font-weight: 500;
       }
       > .vizType{
         .flex(1);
         padding: 2px;
         border: solid 1px lightgray;
+        border-radius: 1px;
         font-weight: 300;
-        border-radius: 10px;
         text-align: center;
         margin: 1px 5px;
         cursor: pointer;
         background-color: white;
         color: gray;
-        &:hover{ box-shadow: 1px 1px 1px black; font-weight: 400; color: orangered }
+        &:hover{ 
+          border-color: gray;
+          font-weight: 400; 
+          color: black;
+        }
       }
     }
 
-    > .configGroup{
+    input[type="number"]{
+      height: 1em;
+      border-width: 0px;
+    }
+
+    .configGroup{
       border: solid 1px gray;
-      border-radius: 8px;
-      margin: 3px 0px 3px 3px;
-      padding: 2px 2px 2px 3px;
+      border-radius: 2px;
+      margin: 3px 0px;
+      padding: 2px 7px;
+      height: 1.2em;
       display: inline-block;
-      background-color: #EEE;
+      vertical-align: middle;
       > .configHeading{
         font-weight: 700;
         cursor: pointer;
@@ -121,8 +130,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         cursor: pointer;
         font-size: 0.8em;
         border: solid 1px lightgray;
-        border-radius: 4px;
+        border-radius: 2px;
         padding: 0px 2px;
+        margin: 0px 1px;
         background-color: white;
         > .opt_label{
           margin-left: 2px;
@@ -136,11 +146,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             padding: 2px;
             margin: 0px;
           }
-          > label{ cursor: pointer; }
+          > label{ 
+            cursor: pointer;
+            font-weight: 300;
+          }
         }
         &.numItems{
           .in_numItems{
-            border-width: 0px;
             width: 35px;
           }
         }
@@ -198,7 +210,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   .record{
     display: block;
     position: absolute;
-    .transition(~"left 1200ms ease-in-out, width 1200ms ease-in-out, height 1200ms ease-in-out, top 1200ms ease-in-out");
+    .transition(~"left 750ms ease-in-out, width 750ms ease-in-out, height 750ms ease-in-out, top 750ms ease-in-out");
     > .block{
       display: block;
       position: absolute;
@@ -310,7 +322,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       margin-bottom: -1px;
       > .recordGroup{ overflow-y: auto; }
     }
-    > .configPanel > .configGroup > .configOpt{
+    > .configPanel .configGroup > .configOpt{
       &.barHeightList{ display: inline-block; }
       &.numBands     { display: none;         }
       &.barPadding   { display: none;         }
@@ -331,7 +343,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       border-bottom: none;
       > .rowGroup > .rowIndexLabel{ display: none; }
     }
-    > .configPanel > .configGroup > .configOpt{
+    > .configPanel .configGroup > .configOpt{
       &.numBands             { display: none;         }
       &.barPadding           { display: none;         }
       &.button_showTip       { display: none;         }
@@ -436,9 +448,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       }
     }
   } // &[chart_type="zvinca_plot"]
+
     
-    
-&[chart_type="packed_bars"]{
+  &[chart_type="packed_bars"]{
     .vizType.packed_bars{ .selectedVizType() }
     .record{
       > .block{
@@ -453,39 +465,19 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         height: calc(~'100% - 4px');
         top: 2px;
         right: 0px;
-       // width: 5px;
-      ////  width: 7px;
-	  ////  height: 7px;
-       //// border-radius: 50%;
-        //background-color: #257e9a;
         opacity: 0;
-        //z-index: -1;
-      }
-      &[n>28]{
-       > .block{
-        background-color:grey;
-      }
       }
       &[isNegative="false"]{
-        //box-shadow: 4px 0px 5px -0px white;
-        //box-shadow: 3px 0px 6px -0px rgba(0,0,0,0.4);
         > .label{
           text-align: right;
           left: auto;
           right: 0%;
         }
-        > .block_tip{
-          //background-color: #7DA7C7;
-          //box-shadow: 3px 0px 4px -0px rgba(0,0,0,0.6);
-        }
       }
       &[isNegative="true"]{
-        //box-shadow: -4px 0px 5px -0px white;
-        //box-shadow: -3px 0px 6px -0px rgba(0,0,0,0.4);
         border-right: 0px;
         .block_tip{
           background-color: #ef8a62;
-          //box-shadow: -3px 0px 4px -0px rgba(0,0,0,0.6);
           left: 0px;
           right: auto;
         }
@@ -513,18 +505,18 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         }
       }
     }
-    > .configPanel > .configGroup > .configOpt{
+    > .configPanel .configGroup > .configOpt{
       &.button_wrappedInverse{ display: inline-block; }
       &.columnGap{ display: inline-block; }
     }
   } // [chart_type="wrapped_bars"]
 
-  &[showLabel="true"]{
+  &[showlabel="true"]{
     .label{ display: block; }
     .button_showLabel > .fa:before{ content: "\f06e"; }
   }
-  &[showLabel="false"]{
-    .label{ display: none; }
+  &[showlabel="false"]{
+    .label{ display: none !important; }
     .button_showLabel {
       color: gray;
       > .fa:before{ content: "\f070"; }
@@ -579,26 +571,24 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
   }
 
-  .negativeRatio{
-      .user-select(none);
+  input.negativeRatio{
+    .user-select(none);
   }
   &[datanegative="true"]{
       .config_datanegative > .fa:before{ content: "\f058"; } // Check
-      .negativeRatio{
+      input.negativeRatio{
           display: inline-block;
-          width:100px;
-          height:10px;
+          width:80px;
+          height:7px;
       }
-      > .configPanel > .configGroup > .configOpt.button_showColor{ display: inline-block; }
+      > .configPanel .configGroup > .configOpt.button_showColor{ display: inline-block; }
   }
   &[datanegative="false"]{
     .config_datanegative{
       color: gray;
       > .fa:before{ content: "\f057"; } // Cross
     }
-    .negativeRatio{
-      display: none;
-    }        
+    input.negativeRatio{ display: none; }
   }
 }
 

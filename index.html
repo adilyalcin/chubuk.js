@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./chubuk.css" type="text/css" charset="utf-8">
 
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,500italic,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 
@@ -147,14 +147,33 @@ html, body {
 }
 .indexHeader{
   padding: 1em 0em 0em 1em;
-  background-color: rgb(246, 247, 242);
-  box-shadow: 0px 0px 1em #D6D8CE;
+}
+
+.githubButton{
+  display: block;
+  text-align: center;
+  margin: 40px 0px;
+  letter-spacing: 1px;
+  padding: .1rem;
+  margin: 0px 0px 5px 0px;
+  position: relative;
+
+  font-weight: 700;
+  color: #00b0df;
+  border: solid 1px #00b0df;
+  text-decoration: none;
+  border-radius: 6px;
+}
+.githubButton:hover{
+  background-color: #00b0df;
+  color: white;
 }
 
 .affilLogo{
-  background-size: 65px;
-  height: 65px;
-  width: 65px;
+  background-size: 85px;
+  height: 85px;
+  width: 85px;
+  margin: 1em 0 0 1em;
   display: inline-block;
   background-repeat: no-repeat;
 }
@@ -162,71 +181,9 @@ html, body {
 #logo_umd{
   background-image: url('./img/logo-umd.jpg');
 }
-#logo_cs{
-  background-image: url('./img/logo-umd_cs_black.png');
-  background-size: 50px 60px;
-  background-position-x: 3px;
-}
 #logo_hcil{
   background-image: url('./img/logo-hcil.jpg');
 }
-
-#forkongithub a{
-  background:#000;
-  color:#fff;
-  text-decoration:none;
-  font-family:arial,sans-serif;
-  text-align:center;
-  font-weight:bold;
-  padding:5px 40px;
-  font-size:1em;
-  line-height:1.5rem;
-  position:relative;
-  transition:0.5s;
-}
-#forkongithub a:hover{background:orangered;color:#fff;}
-#forkongithub a::before,#forkongithub a::after{
-  content:"";
-  width:100%;
-  display:block;
-  position:absolute;
-  top:1px;
-  left:0;
-  height:1px;
-  background:#fff;
-}
-#forkongithub a::after{
-  bottom:1px;
-  top:auto;
-}
-#forkongithub .fa-github{ font-size:1.5em; }
-@media screen and (min-width:800px){
-  #forkongithub{
-      position:fixed;
-      display:block;
-      bottom:0;
-      right:0;
-      width:200px;
-      overflow:hidden;
-      height:200px;
-      z-index:9999;
-      pointer-events: none;
-  }
-  #forkongithub a{
-      width:200px;
-      position:absolute;
-      top:120px;
-      right:-80px;
-      transform:rotate(-45deg);
-      -webkit-transform:rotate(-45deg);
-      -ms-transform:rotate(-45deg);
-      -moz-transform:rotate(-45deg);
-      -o-transform:rotate(-45deg);
-      box-shadow:4px 4px 10px rgba(0,0,0,0.8);
-      pointer-events: all;
-  }
-}
-
 </style>
 	</head>
   <body>
@@ -237,7 +194,10 @@ html, body {
         <h1>chubuk.js</h1>  
         </div>
       <div class="nine columns">
-        <h5 style='font-size: 1.4em'>A charting tool for numeric data, supporting multi-column bar charts<br> (<b>wrapped bars</b> &amp; <b>piled bars</b>), <b>treemaps</b>, and traditional scrolling bar charts.</h5>  
+        <div style='font-size: 1.2em; font-weight: 300; max-width: 570px;'>
+          Charting library for numeric data, supporting multi-column bars
+          <span style='display:inline-block'>(wrapped bars</span>, piled bars, packed bars), treemaps, and
+          scrolling bars.</div>  
         </div>
       </div>
 
@@ -247,25 +207,25 @@ html, body {
           <div class="configPanel" active="true">
             <div class="selectVizType"></div>
             <!-- Data Control -->
-            <span class="configGroup configGroup_Data" active="false">
-              <span class="configHeading">Data </span>
-              <span class="configOpt dataDistr">
-                <input name="dist_mode" type="radio" value="random" id="dist_mode_random">
-                    <label class="dist_mode_label" for="dist_mode_random">Rand </label>
-                <input name="dist_mode" type="radio" value="normal" id="dist_mode_normal" checked>
-                    <label class="dist_mode_label" for="dist_mode_normal">Norm. </label>
-                <input name="dist_mode" type="radio" value="logNormal" id="dist_mode_logNormal">
-                    <label class="dist_mode_label" for="dist_mode_logNormal">Skewed </label>
-                </span>
-              <span class="configOpt numItems">
-                 # Rec: <input class="in_numItems" type="number" min="100" max="5000" value="150" /> 
-                </span>
-              <span class="configOpt config_datanegative">
-                <span class="fa"></span><span class="opt_label">&lt;0</span>
-                <input type="range" min="0" max="100" value="50" class="negativeRatio">
-                </span>
-              <span class="refreshData fa fa-refresh" onclick="dataGenerator.generateData()"></span>
-              </span> <!-- / Data Control -->
+            <div class="chartOptions">
+              <span class="configGroup configGroup_Data" active="false">
+                <span class="configHeading">Data </span>
+                <span class="configOpt dataDistr">
+                  <input name="dist_mode" type="radio" value="random" id="dist_mode_random">
+                      <label class="dist_mode_label" for="dist_mode_random">Rand </label>
+                  <input name="dist_mode" type="radio" value="normal" id="dist_mode_normal" checked>
+                      <label class="dist_mode_label" for="dist_mode_normal">Normal </label>
+                  <input name="dist_mode" type="radio" value="logNormal" id="dist_mode_logNormal">
+                      <label class="dist_mode_label" for="dist_mode_logNormal">Skewed </label>
+                  </span><span class="configOpt numItems">
+                   # Rec: <input class="in_numItems" type="number" min="100" max="5000" value="150" /> 
+                  </span><span class="configOpt config_datanegative">
+                  <span class="fa"></span><span class="opt_label">&lt;0</span>
+                  <input type="range" min="0" max="100" value="50" class="negativeRatio">
+                  </span>
+                <span class="refreshData fa fa-refresh" onclick="dataGenerator.generateData()"></span>
+                </span> <!-- / Data Control -->
+              </div>
             </div>
           </div>
         </div>
@@ -283,31 +243,24 @@ html, body {
       </div>
 
       <div class="row" style='margin: 1em;'>
-        <div class="five columns">
-          <h3 style='margin-bottom: 10px;'>Contact</h3>
-          <b>Developed by:</b> M. Adil Yalcin (<a href='http://www.adilyalcin.me' target='_blank'>adilyalcin.me</a>)<br>
-            Pranathi Mylavarapu (<a href='http://www.pranathimylavarapu.com' target='_blank'>pranathimylavarapu.com</a>)
+        <div class="four columns">
+          <h3 style='margin-bottom: 10px;'>Code</h3>
+          <a href='https://github.com/adilyalcin/chubuk.js' class='githubButton'><i class='fa fa-github'></i> View on Github</a>
+          By <a href='http://www.adilyalcin.me' target='_blank'>M. Adil Yalçın</a> &amp; <a href='http://www.pranathimylavarapu.com' target='_blank'>Pranathi Mylavarapu</a><br>
           </div>
         <div class="four columns">
           <h3 style='margin-bottom: 10px;'>License</h3>
           Released under 
           <a href='https://github.com/adilyalcin/chubuk.js/blob/gh-pages/LICENSE' target='_blank'>BSD license</a><br>
-          <i class=' fa fa-copyright'></i>  2016 University of Maryland
+          <i class=' fa fa-copyright'></i> 2018 University of Maryland
           </div>
-        <div class="three columns affiliations" style='text-align: right;'>
+        <div class="four columns affiliations" style='text-align: right;'>
           <a href="http://www.cs.umd.edu/hcil" target="_blank">
             <span id="logo_hcil" class="affilLogo" title="Human Computer Interaction Lab"></a>
-          <a href="http://www.cs.umd.edu" target="_blank">
-            <span id="logo_cs" class="affilLogo" title="Computer Science Department"></span></a>
           <a href="http://www.umd.edu" target="_blank">
             <span id="logo_umd" class="affilLogo" title="University of Maryland, College Park"></a>
           </div>
       </div>
     </div>
-
-
-    <div id="forkongithub">
-      <a href="https://github.com/adilyalcin/chubuk.js" target='_blank'> Open Source <i class="fa fa-github"></i></a>
-      </div>
   </body>
 </html>

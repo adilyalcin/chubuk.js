@@ -201,10 +201,10 @@ Chubuk.prototype = {
 
     // Add VizType selection
     this.DOM.selectVizType = this.DOM.configPanel.select(".selectVizType");
-    this.DOM.selectVizType.append("div").attr("class","selectVizType-Header").text("Chart Type:");
+    this.DOM.selectVizType.append("div").attr("class","selectVizType-Header").text("Select Chart");
 
     this.DOM.selectVizType.selectAll(".vizType").data([
-        {_class:"long_list", name:"Long List"},
+        {_class:"long_list", name:"Scrolling List"},
         {_class:"treemap", name:"Treemap"},
         {_class:"wrapped_bars", name:"Wrapped Bars"},
         {_class:"piled_bars", name:"Piled Bars"},
@@ -217,10 +217,10 @@ Chubuk.prototype = {
           me.setConfig("chart_type",d._class);
         });
 
-    this.DOM.configGroup_Display = this.DOM.configPanel.append("span")
+    this.DOM.configGroup_Display = this.DOM.configPanel.select(".chartOptions").append("span")
       .attr("class","configGroup configGroup_Display")
       .attr("active",false);
-    this.DOM.configGroup_Display.append("span").attr("class","configHeading").html("Display ");
+    this.DOM.configGroup_Display.append("span").attr("class","configHeading").html("View ");
 
     x = this.DOM.configGroup_Display.selectAll(".configOpt").data([
         { id:"button_showTooltip", name:"Tooltip"},
